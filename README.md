@@ -1,1 +1,1 @@
-# signature-generator.github.io
+# signature-generator
