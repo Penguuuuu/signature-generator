@@ -13,7 +13,12 @@ canvas.height = 20;
 document.getElementById('bgType').value = 'solid'; // because it doesn't reset when loading page for whatever reason
 document.getElementById('gradientAngle').value = 0; // because it doesn't reset when loading page for whatever reason
 
-drawCanvas();
+new FontFace('visitor', 'url(visitor.ttf)')
+    .load()
+    .then(font => {
+        document.fonts.add(font);
+        drawCanvas();
+    });
 
 function drawCanvas() {
     const width = canvas.width;
