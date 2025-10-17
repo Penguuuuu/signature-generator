@@ -2,6 +2,7 @@ let canvas = document.getElementById('signature');
 let context = canvas.getContext('2d');
 let canvasText = document.getElementById('inputText').value = 'Touhou Enjoyer';
 let textStroke = true;
+let textGradient = true;
 let borderStroke = true;
 let stripes = true;
 let shine = true;
@@ -73,8 +74,23 @@ function drawCanvas() {
         context.strokeText(canvasText, width / 2, height / 2);
     }
 
-    context.fillStyle = 'white';
-    context.fillText(canvasText, width / 2, height / 2);
+if (!textGradient) context.fillStyle = 'white';
+else {
+    const measureText = context.measureText(canvasText);
+    const textHeight = measureText.actualBoundingBoxAscent + measureText.actualBoundingBoxDescent;
+    const gradient = context.createLinearGradient(
+        0,
+        height / 2 + 1 - textHeight / 2, // +1 because i have no clue lol
+        0,
+        height / 2 + textHeight / 2
+    );
+
+        gradient.addColorStop(0, '#fff');
+        gradient.addColorStop(1, '#444');
+
+        context.fillStyle = gradient;
+}
+context.fillText(canvasText, width / 2, height / 2);
 
     if (shine) {
         context.beginPath();
@@ -91,6 +107,11 @@ function drawCanvas() {
         context.fill();
     }
 }
+
+document.getElementById('buttonTextGradient').addEventListener('click', function() {
+    textGradient = !textGradient;
+    drawCanvas();
+});
 
 document.getElementById('inputText').addEventListener('input', function(e) {
     canvasText = e.target.value;
