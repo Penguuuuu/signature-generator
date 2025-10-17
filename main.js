@@ -1,0 +1,125 @@
+let canvas = document.getElementById('signature');
+let context = canvas.getContext('2d');
+let textStroke = true;
+let borderStroke = true;
+let stripes = true;
+let shine = true;
+let backgroundType = 'solid';
+let gradientAngle = 0;
+
+canvas.width = 350;
+canvas.height = 20;
+
+document.getElementById('bgType').value = 'solid'; // because it doesn't reset when loading page for whatever reason
+document.getElementById('gradientAngle').value = 0; // because it doesn't reset when loading page for whatever reason
+
+drawCanvas();
+
+function drawCanvas() {
+    const width = canvas.width;
+    const height = canvas.height;
+
+    context.clearRect(0, 0, width, height);
+
+    if (backgroundType === 'solid') { context.fillStyle = 'blue' }
+    else {
+        const angle = gradientAngle * Math.PI / 180;
+        const gradient = context.createLinearGradient(
+            width / 2 - Math.cos(angle) * width / 2,
+            height / 2 - Math.sin(angle) * height / 2,
+            width / 2 + Math.cos(angle) * width / 2,
+            height / 2 + Math.sin(angle) * height / 2
+        );
+
+        gradient.addColorStop(0, 'red');
+        gradient.addColorStop(1, 'orange');
+
+        context.fillStyle = gradient;
+    };
+    context.fillRect(0, 0, width, height);
+
+    if (stripes) {
+        const stripeSpacing = 5;
+        const stripeColor = 'rgba(255,255,255,0.5)';
+        const stripeWidth = 1;
+
+        context.strokeStyle = stripeColor;
+        context.lineWidth = stripeWidth;
+
+        for (let x = 0; x <= width + height; x += stripeSpacing) {
+            context.beginPath();
+            context.moveTo(x, 0);
+            context.lineTo(x - height, height);
+            context.stroke();
+        }
+    }
+
+    if (borderStroke) {
+        context.strokeStyle = 'black';
+        context.lineWidth = 2;
+        context.strokeRect(0, 0, width, height);
+    }
+
+    context.font = '10px visitor';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+
+    if (textStroke) {
+        context.lineWidth = 2;
+        context.strokeStyle = 'black';
+        context.strokeText('EEEEEEEE', width / 2, height / 2);
+    }
+
+    context.fillStyle = 'white';
+    context.fillText('EEEEEEEE', width / 2, height / 2);
+
+    if (shine) {
+        context.beginPath();
+        context.ellipse(
+            width / 2,
+            0,
+            width / 2, height / 2,
+            0,
+            Math.PI,
+            0,
+            true
+        );
+        context.fillStyle = 'rgba(255,255,255,0.3)';
+        context.fill();
+    }
+}
+
+document.getElementById('buttonStrokeText').addEventListener('click', function() {
+    textStroke = !textStroke;
+    drawCanvas();
+});
+
+document.getElementById('buttonStrokeBorder').addEventListener('click', function() {
+    borderStroke = !borderStroke;
+    drawCanvas();
+});
+
+document.getElementById('buttonStripes').addEventListener('click', function() {
+    stripes = !stripes;
+    drawCanvas();
+});
+
+document.getElementById('buttonShine').addEventListener('click', function() {
+    shine = !shine;
+    drawCanvas();
+});
+
+document.getElementById('bgType').addEventListener('change', function(e) {
+    backgroundType = e.target.value;
+    drawCanvas();
+});
+
+document.getElementById('gradientAngle').addEventListener('input', function(e) {
+    gradientAngle = parseInt(e.target.value);
+    drawCanvas();
+});
+
+document.getElementById('buttonCopy').addEventListener('click', async () => {
+        const blob = await new Promise(resolve => canvas.toBlob(resolve));
+        await navigator.clipboard.write([ new ClipboardItem({ 'image/png': blob }) ]);
+});

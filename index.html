@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>Signature Generator</title>
+        <link rel='stylesheet' href='style.css'>
+    </head>
+    <body>
+        <canvas id='signature'>test</canvas><br><br>
+        <button id='buttonStrokeText'>Text Stroke</button><br><br>
+        <button id='buttonStrokeBorder'>Border Stroke</button><br><br>
+        <button id='buttonStripes'>Stripes</button><br><br>
+        <button id='buttonShine'>Shine</button><br><br>
+        <label for='bgType'>Background:</label>
+        <select id='bgType'>
+            <option value='solid'>Solid</option>
+            <option value='gradient'>Gradient</option>
+        </select>
+        <label for="gradientAngle">Gradient Angle (0-359°):</label>
+        <input type="number" id="gradientAngle" value="0" min="0" max="359"><br><br>
+        <button id="buttonCopy">Copy to Clipboard</button>
+        <script src='main.js'></script>
+    </body>
+</html>
