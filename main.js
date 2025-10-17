@@ -108,47 +108,47 @@ function drawCanvas() {
     }
 }
 
-document.getElementById('buttonTextGradient').addEventListener('click', function() {
+document.getElementById('buttonTextGradient').addEventListener('click', () => {
     textGradient = !textGradient;
     drawCanvas();
 });
 
-document.getElementById('inputText').addEventListener('input', function(e) {
+document.getElementById('inputText').addEventListener('input', e => {
     canvasText = e.target.value;
     drawCanvas();
 });
 
-document.getElementById('buttonStrokeText').addEventListener('click', function() {
+document.getElementById('buttonStrokeText').addEventListener('click', () => {
     textStroke = !textStroke;
     drawCanvas();
 });
 
-document.getElementById('buttonStrokeBorder').addEventListener('click', function() {
+document.getElementById('buttonStrokeBorder').addEventListener('click', () => {
     borderStroke = !borderStroke;
     drawCanvas();
 });
 
-document.getElementById('buttonStripes').addEventListener('click', function() {
+document.getElementById('buttonStripes').addEventListener('click', () => {
     stripes = !stripes;
     drawCanvas();
 });
 
-document.getElementById('buttonShine').addEventListener('click', function() {
+document.getElementById('buttonShine').addEventListener('click', () => {
     shine = !shine;
     drawCanvas();
 });
 
-document.getElementById('bgType').addEventListener('change', function(e) {
+document.getElementById('bgType').addEventListener('change', e => {
     backgroundType = e.target.value;
     drawCanvas();
 });
 
-document.getElementById('gradientAngle').addEventListener('input', function(e) {
+document.getElementById('gradientAngle').addEventListener('input', e => {
     gradientAngle = parseInt(e.target.value);
     drawCanvas();
 });
 
 document.getElementById('buttonCopy').addEventListener('click', async () => {
-        const blob = await new Promise(resolve => canvas.toBlob(resolve));
-        await navigator.clipboard.write([ new ClipboardItem({ 'image/png': blob }) ]);
+    const blob = await new Promise(resolve => canvas.toBlob(resolve));
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
 });
