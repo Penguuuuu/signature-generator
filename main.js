@@ -56,7 +56,7 @@ function drawCanvas() {
 
     if (borderStroke) {
         context.strokeStyle = 'black';
-        context.lineWidth = 2;
+        context.lineWidth = 2; // 2 because it's centered on the the border for whatever reason
         context.strokeRect(0, 0, width, height);
     }
 
