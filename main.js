@@ -1,5 +1,5 @@
-let canvas = document.getElementById('signature');
-let context = canvas.getContext('2d');
+const canvas = document.getElementById('signature');
+const context = canvas.getContext('2d');
 let canvasText = document.getElementById('inputText').value = 'Touhou Enjoyer';
 let textStroke = true;
 let textGradient = true;
@@ -25,7 +25,7 @@ function drawCanvas() {
 
     context.clearRect(0, 0, width, height);
 
-    if (backgroundType === 'solid') { context.fillStyle = 'blue' }
+    if (backgroundType === 'solid') context.fillStyle = 'blue';
     else {
         const angle = gradientAngle * Math.PI / 180;
         const gradient = context.createLinearGradient(
@@ -74,23 +74,23 @@ function drawCanvas() {
         context.strokeText(canvasText, width / 2, height / 2);
     }
 
-if (!textGradient) context.fillStyle = 'white';
-else {
-    const measureText = context.measureText(canvasText);
-    const textHeight = measureText.actualBoundingBoxAscent + measureText.actualBoundingBoxDescent;
-    const gradient = context.createLinearGradient(
-        0,
-        height / 2 + 1 - textHeight / 2, // +1 because i have no clue lol
-        0,
-        height / 2 + textHeight / 2
-    );
+    if (!textGradient) context.fillStyle = 'white';
+    else {
+        const measureText = context.measureText(canvasText);
+        const textHeight = measureText.actualBoundingBoxAscent + measureText.actualBoundingBoxDescent;
+        const gradient = context.createLinearGradient(
+            0,
+            height / 2 + 1 - textHeight / 2, // +1 because i have no clue lol
+            0,
+            height / 2 + textHeight / 2
+        );
 
         gradient.addColorStop(0, '#fff');
-        gradient.addColorStop(1, '#444');
+        gradient.addColorStop(1, '#888');
 
         context.fillStyle = gradient;
-}
-context.fillText(canvasText, width / 2, height / 2);
+    }
+    context.fillText(canvasText, width / 2, height / 2);
 
     if (shine) {
         context.beginPath();
