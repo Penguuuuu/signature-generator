@@ -12,5 +12,7 @@
 body {
     font-family: arial;
     image-rendering: pixelated;
+    color: #fff;
+    background: #444;
 }
 

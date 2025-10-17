@@ -1,17 +1,15 @@
 let canvas = document.getElementById('signature');
 let context = canvas.getContext('2d');
+let canvasText = document.getElementById('inputText').value = 'Touhou Enjoyer';
 let textStroke = true;
 let borderStroke = true;
 let stripes = true;
 let shine = true;
-let backgroundType = 'solid';
-let gradientAngle = 0;
+let backgroundType = document.getElementById('bgType').value = 'gradient';
+let gradientAngle = Number(document.getElementById('gradientAngle').value = 90);
 
 canvas.width = 350;
 canvas.height = 20;
-
-document.getElementById('bgType').value = 'solid'; // because it doesn't reset when loading page for whatever reason
-document.getElementById('gradientAngle').value = 0; // because it doesn't reset when loading page for whatever reason
 
 new FontFace('visitor', 'url(visitor.ttf)')
     .load()
@@ -72,11 +70,11 @@ function drawCanvas() {
     if (textStroke) {
         context.lineWidth = 2;
         context.strokeStyle = 'black';
-        context.strokeText('EEEEEEEE', width / 2, height / 2);
+        context.strokeText(canvasText, width / 2, height / 2);
     }
 
     context.fillStyle = 'white';
-    context.fillText('EEEEEEEE', width / 2, height / 2);
+    context.fillText(canvasText, width / 2, height / 2);
 
     if (shine) {
         context.beginPath();
@@ -93,6 +91,11 @@ function drawCanvas() {
         context.fill();
     }
 }
+
+document.getElementById('inputText').addEventListener('input', function(e) {
+    canvasText = e.target.value;
+    drawCanvas();
+});
 
 document.getElementById('buttonStrokeText').addEventListener('click', function() {
     textStroke = !textStroke;
