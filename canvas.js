@@ -95,5 +95,5 @@ export function createCanvas() {
     contextLarge.imageSmoothingEnabled = false;
     contextLarge.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, canvasLarge.width, canvasLarge.height);
 
-    document.body.append(canvas, canvasLarge);
+    return { canvas, canvasLarge };
 }
