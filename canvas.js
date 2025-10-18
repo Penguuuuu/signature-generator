@@ -18,8 +18,8 @@ export function createCanvas() {
     const measure = context.measureText(text);
     const typeText = document.getElementById('typeText').firstChild.textContent.toLowerCase();
 
-    const buttonBorderText = document.getElementById('buttonBorderText')?.dataset.active;
-    if (buttonBorderText === 'true') {
+    const checkboxBorderText = document.getElementById('checkboxBorderText');
+    if (checkboxBorderText.checked) {
         context.strokeStyle = 'black';
         context.lineWidth = 2;
         context.strokeText(text, canvas.width / 2, canvas.height / 2);
@@ -39,10 +39,8 @@ export function createCanvas() {
     }
     context.fillText(text, canvas.width / 2, canvas.height / 2);
 
-
-
-    const buttonBorder = document.getElementById('buttonBorder')?.dataset.active;
-    if (buttonBorder === 'true') {
+    const checkboxBorder = document.getElementById('checkboxBorder');
+    if (checkboxBorder.checked) {
         context.strokeStyle = 'black';
         context.lineWidth = 2;
         context.strokeRect(0, 0, canvas.width, canvas.height);

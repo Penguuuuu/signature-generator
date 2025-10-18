@@ -1,17 +1,10 @@
-import { createDropdown, createButton } from './ui.js';
+import { createDropdown, createButton, createCheckbox } from './ui.js';
 import { createCanvas } from './canvas.js';
 
 new FontFace("visitor", "url(visitor.ttf)")
         .load()
         .then(font => {
             document.fonts.add(font);
-
-            const buttonBorder = createButton({
-                label: 'Border',
-                id: 'buttonBorder',
-                defaultValue: true
-            });
-            document.body.appendChild(buttonBorder);
 
             const dropdownText = createDropdown({
                 label: 'Text Type',
@@ -21,12 +14,19 @@ new FontFace("visitor", "url(visitor.ttf)")
             });
             document.body.appendChild(dropdownText);
 
-            const buttonBorderText = createButton({
-                label: 'Text Border',
-                id: 'buttonBorderText',
+            const checkboxBorder = createCheckbox({
+                label: 'Border',
+                id: 'checkboxBorder',
                 defaultValue: true
             });
-            document.body.appendChild(buttonBorderText);
+            document.body.appendChild(checkboxBorder);
+
+            const checkboxBorderText = createCheckbox({
+                label: 'Text Border',
+                id: 'checkboxBorderText',
+                defaultValue: true
+            });
+            document.body.appendChild(checkboxBorderText);
 
             createCanvas();
         });

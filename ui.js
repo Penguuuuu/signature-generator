@@ -23,8 +23,8 @@ export function createDropdown({ label, options, id, defaultValue }) {
     dropdown.id = id;
     Object.assign(dropdown.style, {
         position: 'relative',
-        width: '150px',
-        padding: '2px',
+        width: '200px',
+        padding: '4px',
         border: '1px solid #444',
         backgroundColor: '#111',
         cursor: 'pointer',
@@ -52,14 +52,15 @@ export function createDropdown({ label, options, id, defaultValue }) {
         border: '1px solid #444',
         borderTop: '0',
         backgroundColor: '#111',
-        userSelect: 'none'
+        userSelect: 'none',
+        zIndex: 1000
     });
 
     options.forEach(opt => {
         const item = document.createElement('div');
         item.textContent = helpers.uppercase(opt);
         Object.assign(item.style, {
-            padding: '2px',
+            padding: '4px',
             cursor: 'pointer'
         });
         item.addEventListener('mouseenter', () => item.style.backgroundColor = '#222');
@@ -100,7 +101,7 @@ export function createButton({ label, id, defaultValue }) {
     button.dataset.active = defaultValue;
     button.textContent = helpers.uppercase(button.dataset.active);
     Object.assign(button.style, {
-        backgroundColor: '#111',
+        backgroundColor: '#333',
         color: 'white',
         border: '1px solid #444',
         borderRadius: '0',
@@ -108,7 +109,7 @@ export function createButton({ label, id, defaultValue }) {
         cursor: 'pointer'
     });
     button.addEventListener('mouseenter', () => button.style.backgroundColor = '#222');
-    button.addEventListener('mouseleave', () => button.style.backgroundColor = '#111');
+    button.addEventListener('mouseleave', () => button.style.backgroundColor = '#333');
     button.addEventListener('click', () => {
         button.dataset.active = button.dataset.active === 'true' ? 'false' : 'true';
         button.textContent = helpers.uppercase(button.dataset.active);
@@ -117,5 +118,51 @@ export function createButton({ label, id, defaultValue }) {
 
     container.appendChild(labelElement);
     container.appendChild(button);
+    return container;
+}
+
+export function createCheckbox({ label, id, defaultValue }) {
+    const container = document.createElement('div');
+    Object.assign(container.style, {
+        display: 'flex',
+        gap: '5px',
+        alignItems: 'center',
+        position: 'relative'
+    });
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = id;
+    checkbox.checked = defaultValue;
+    Object.assign(checkbox.style, {
+        appearance: 'none',
+        width: '22px',
+        height: '22px',
+        border: '1px solid #444',
+        background: checkbox.checked ? '#333' : '#111',
+        cursor: 'pointer',
+        position: 'relative'
+    });
+    checkbox.addEventListener('change', () => {
+        tick.style.display = checkbox.checked ? 'block' : 'none';
+        checkbox.style.backgroundColor = checkbox.checked ? '#333' : '#111';
+        createCanvas();
+    });
+
+    const tick = document.createElement('img');
+    tick.src = 'tick.svg';
+    Object.assign(tick.style, {
+        width: '22px',
+        height: '22px',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: checkbox.checked ? 'block' : 'none'
+    });
+
+    const elementLabel = document.createElement('label');
+    elementLabel.htmlFor = id;
+    elementLabel.textContent = label;
+
+    container.append(checkbox, tick, elementLabel);
     return container;
 }
