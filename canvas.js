@@ -1,11 +1,12 @@
 export function createCanvas() {
-    document.querySelector('canvas')?.remove();
+    document.querySelectorAll('canvas').forEach(c => c.remove());
 
     const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-
+    canvas.id = 'canvas';
     canvas.width = 350;
     canvas.height = 20;
+
+    const context = canvas.getContext("2d");
 
     const typeBackground = document.getElementById('typeBackground').firstChild.textContent.toLowerCase();
     if (typeBackground === 'solid') context.fillStyle = '#fff';
@@ -86,5 +87,13 @@ export function createCanvas() {
         context.strokeRect(0, 0, canvas.width, canvas.height);
     }
 
-    document.body.appendChild(canvas);
+    const canvasLarge = document.createElement('canvas');
+    canvasLarge.width = canvas.width * 2;
+    canvasLarge.height = canvas.height * 2;
+
+    const contextLarge = canvasLarge.getContext('2d');
+    contextLarge.imageSmoothingEnabled = false;
+    contextLarge.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, canvasLarge.width, canvasLarge.height);
+
+    document.body.append(canvas, canvasLarge);
 }
