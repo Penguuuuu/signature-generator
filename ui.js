@@ -2,11 +2,18 @@ import { createCanvas } from './canvas.js';
 import { helpers } from './helpers.js';
 
 export function createDropdown({ label, options, id, defaultValue }) {
+    function dropdownColor() {
+        if (containerOptions.style.display === 'block') dropdown.style.backgroundColor = '#222';
+        else dropdown.style.backgroundColor = '#111';
+    }
+
     const container = document.createElement('div');
-    container.style.display = 'flex';
-    container.style.flexDirection = 'column';
-    container.style.alignItems = 'center';
-    container.style.gap = '2px';
+    Object.assign(container.style, {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '2px'
+    });
 
     const elementLabel = document.createElement('label');
     elementLabel.htmlFor = id;
@@ -14,48 +21,61 @@ export function createDropdown({ label, options, id, defaultValue }) {
 
     const dropdown = document.createElement('div');
     dropdown.id = id;
-    dropdown.style.position = 'relative';
-    dropdown.style.width = '150px';
-    dropdown.style.padding = '2px';
-    dropdown.style.border = '1px solid #333';
-    dropdown.style.backgroundColor = '#111';
-    dropdown.style.cursor = 'pointer';
+    Object.assign(dropdown.style, {
+        position: 'relative',
+        width: '150px',
+        padding: '2px',
+        border: '1px solid #444',
+        backgroundColor: '#111',
+        cursor: 'pointer',
+        userSelect: 'none'
+    });
+    dropdown.addEventListener('mouseenter', () => dropdown.style.backgroundColor = '#222');
+    dropdown.addEventListener('mouseleave', () => dropdownColor());
+    dropdown.addEventListener('click', (e) => {
+        containerOptions.style.display = containerOptions.style.display === 'none' ? 'block' : 'none';
+        dropdownColor();
+        e.stopPropagation();
+    });
 
     const selected = document.createElement('div');
     selected.textContent = helpers.uppercase(defaultValue);
+    selected.style.userSelect = 'none';
 
     const containerOptions = document.createElement('div');
-    containerOptions.style.display = 'none';
-    containerOptions.style.position = 'absolute';
-    containerOptions.style.top = '100%';
-    containerOptions.style.left = '-1px';
-    containerOptions.style.width = 'calc(100% + 2px)';
-    containerOptions.style.border = '1px solid #333';
-    containerOptions.style.borderTop = '0';
-    containerOptions.style.backgroundColor = '#111';
+    Object.assign(containerOptions.style, {
+        display: 'none',
+        position: 'absolute',
+        top: '100%',
+        left: '-1px',
+        width: 'calc(100% + 2px)',
+        border: '1px solid #444',
+        borderTop: '0',
+        backgroundColor: '#111',
+        userSelect: 'none'
+    });
 
     options.forEach(opt => {
         const item = document.createElement('div');
         item.textContent = helpers.uppercase(opt);
-        item.style.padding = '2px';
-        item.style.cursor = 'pointer';
-        item.addEventListener('mouseenter', () => item.style.backgroundColor = '#444');
+        Object.assign(item.style, {
+            padding: '2px',
+            cursor: 'pointer'
+        });
+        item.addEventListener('mouseenter', () => item.style.backgroundColor = '#222');
         item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
-        item.addEventListener('click', (e) => {
+        item.addEventListener('click', () => {
             selected.textContent = item.textContent;
-            containerOptions.style.display = 'none';
+            dropdownColor();
             createCanvas();
-            e.stopPropagation();
         });
         containerOptions.appendChild(item);
     });
 
-    selected.addEventListener('click', (e) => {
-        containerOptions.style.display = containerOptions.style.display === 'none' ? 'block' : 'none';
-        e.stopPropagation();
+    document.addEventListener('click', () => {
+        containerOptions.style.display = 'none';
+        dropdownColor();
     });
-
-    document.addEventListener('click', () => containerOptions.style.display = 'none');
 
     dropdown.append(selected, containerOptions);
     container.append(elementLabel, dropdown);
@@ -64,10 +84,12 @@ export function createDropdown({ label, options, id, defaultValue }) {
 
 export function createButton({ label, id, defaultValue }) {
     const container = document.createElement('div');
-    container.style.display = 'flex';
-    container.style.flexDirection = 'column';
-    container.style.alignItems = 'center';
-    container.style.gap = '2px';
+    Object.assign(container.style, {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '2px'
+    });
 
     const labelElement = document.createElement('label');
     labelElement.htmlFor = id;
@@ -77,7 +99,16 @@ export function createButton({ label, id, defaultValue }) {
     button.id = id;
     button.dataset.active = defaultValue;
     button.textContent = helpers.uppercase(button.dataset.active);
-    button.style.cursor = 'pointer';
+    Object.assign(button.style, {
+        backgroundColor: '#111',
+        color: 'white',
+        border: '1px solid #444',
+        borderRadius: '0',
+        padding: '2px',
+        cursor: 'pointer'
+    });
+    button.addEventListener('mouseenter', () => button.style.backgroundColor = '#222');
+    button.addEventListener('mouseleave', () => button.style.backgroundColor = '#111');
     button.addEventListener('click', () => {
         button.dataset.active = button.dataset.active === 'true' ? 'false' : 'true';
         button.textContent = helpers.uppercase(button.dataset.active);
