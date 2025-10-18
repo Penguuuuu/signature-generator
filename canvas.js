@@ -1,5 +1,6 @@
 export function createCanvas() {
-    document.querySelectorAll('canvas').forEach(c => c.remove());
+    const container = document.getElementById('preview');
+    container.innerHTML = '';
 
     const canvas = document.createElement("canvas");
     canvas.id = 'canvas';
@@ -12,8 +13,8 @@ export function createCanvas() {
     if (typeBackground === 'solid') context.fillStyle = '#fff';
     else {
         const bgGradient = context.createLinearGradient(0, 1, 0, canvas.height - 1);
-        bgGradient.addColorStop(0, 'red');
-        bgGradient.addColorStop(1, 'orange');
+        bgGradient.addColorStop(0, 'black');
+        bgGradient.addColorStop(1, 'purple');
         context.fillStyle = bgGradient;
     }
     context.fillRect(0, 0, canvas.width, canvas.height);
@@ -95,5 +96,5 @@ export function createCanvas() {
     contextLarge.imageSmoothingEnabled = false;
     contextLarge.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, canvasLarge.width, canvasLarge.height);
 
-    return { canvas, canvasLarge };
+    container.append(canvas, canvasLarge);
 }

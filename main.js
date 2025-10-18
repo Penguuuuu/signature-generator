@@ -57,12 +57,8 @@ new FontFace('visitor', 'url(visitor.ttf)')
                 dropdownBackground,
                 checkboxBorder,
                 checkboxBorderText,
-                checkboxStripes,
-                checkboxShine
+                checkboxStripes, checkboxShine
             );
 
-            const { canvas, canvasLarge } = createCanvas();
-
-            const preview = document.getElementById('preview');
-            preview.append(canvas, canvasLarge);
+            createCanvas();
         });
