@@ -8,7 +8,14 @@ export function createCanvas() {
     canvas.width = 350;
     canvas.height = 20;
 
-    context.fillStyle = 'red';
+    const typeBackground = document.getElementById('typeBackground').firstChild.textContent.toLowerCase();
+    if (typeBackground === 'solid') context.fillStyle = 'red';
+    else {
+        const bgGradient = context.createLinearGradient(0, 1, 0, canvas.height - 1);
+        bgGradient.addColorStop(0, 'red');
+        bgGradient.addColorStop(1, 'orange');
+        context.fillStyle = bgGradient;
+    }
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     const text = "Touhou Enjoyer";
@@ -45,6 +52,4 @@ export function createCanvas() {
         context.lineWidth = 2;
         context.strokeRect(0, 0, canvas.width, canvas.height);
     }
-
-
 }

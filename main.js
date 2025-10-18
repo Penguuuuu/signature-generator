@@ -14,6 +14,14 @@ new FontFace("visitor", "url(visitor.ttf)")
             });
             document.body.appendChild(dropdownText);
 
+            const dropdownBackground = createDropdown({
+                label: 'Background Type',
+                options: ['solid', 'gradient'],
+                id: 'typeBackground',
+                defaultValue: 'gradient'
+            });
+            document.body.appendChild(dropdownBackground);
+
             const checkboxBorder = createCheckbox({
                 label: 'Border',
                 id: 'checkboxBorder',
