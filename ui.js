@@ -63,7 +63,7 @@ export function createDropdown({ label, options, id, defaultValue }) {
             padding: '4px',
             cursor: 'pointer'
         });
-        item.addEventListener('mouseenter', () => item.style.backgroundColor = '#222');
+        item.addEventListener('mouseenter', () => item.style.backgroundColor = '#333');
         item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
         item.addEventListener('click', () => {
             selected.textContent = item.textContent;
@@ -143,6 +143,8 @@ export function createCheckbox({ label, id, defaultValue }) {
         cursor: 'pointer',
         position: 'relative'
     });
+    checkbox.addEventListener('mouseenter', () => checkbox.style.backgroundColor = '#222');
+    checkbox.addEventListener('mouseleave', () => checkbox.style.backgroundColor = checkbox.checked ? '#333' : '#111');
     checkbox.addEventListener('change', () => {
         tick.style.display = checkbox.checked ? 'block' : 'none';
         checkbox.style.backgroundColor = checkbox.checked ? '#333' : '#111';
@@ -166,3 +168,41 @@ export function createCheckbox({ label, id, defaultValue }) {
     container.append(checkbox, tick, elementLabel);
     return container;
 }
+
+export function createTextbox({ label, id, defaultValue }) {
+    const container = document.createElement('div');
+    Object.assign(container.style, {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '2px'
+    });
+
+    const labelElement = document.createElement('label');
+    labelElement.htmlFor = id;
+    labelElement.textContent = label;
+
+    const textbox = document.createElement('input');
+    textbox.type = 'text';
+    textbox.id = id;
+    textbox.placeholder = 'Type here...';
+    textbox.value = defaultValue;
+    Object.assign(textbox.style, {
+        width: '200px',
+        padding: '4px',
+        border: '1px solid #444',
+        color: '#fff',
+        background: '#111',
+        outline: 'none',
+        cursor: 'text',
+        userSelect: 'text',
+        font: 'inherit'
+    });
+    textbox.addEventListener('mouseenter', () => textbox.style.backgroundColor = '#222');
+    textbox.addEventListener('mouseleave', () => textbox.style.backgroundColor = '#111');
+    textbox.addEventListener('input', () => createCanvas());
+
+    container.append(labelElement, textbox);
+    return container;
+}
+

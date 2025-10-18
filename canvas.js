@@ -2,14 +2,13 @@ export function createCanvas() {
     document.querySelector('canvas')?.remove();
 
     const canvas = document.createElement("canvas");
-    document.body.appendChild(canvas);
     const context = canvas.getContext("2d");
 
     canvas.width = 350;
     canvas.height = 20;
 
     const typeBackground = document.getElementById('typeBackground').firstChild.textContent.toLowerCase();
-    if (typeBackground === 'solid') context.fillStyle = 'red';
+    if (typeBackground === 'solid') context.fillStyle = '#fff';
     else {
         const bgGradient = context.createLinearGradient(0, 1, 0, canvas.height - 1);
         bgGradient.addColorStop(0, 'red');
@@ -35,7 +34,8 @@ export function createCanvas() {
         }
     }
 
-    const text = "Touhou Enjoyer";
+    const textBox = document.getElementById('textBox');
+    const text = textBox.value;
     context.font = '10px visitor';
     context.textAlign = 'center';
     context.textBaseline = 'middle';
@@ -85,4 +85,6 @@ export function createCanvas() {
         context.lineWidth = 2;
         context.strokeRect(0, 0, canvas.width, canvas.height);
     }
+
+    document.body.appendChild(canvas);
 }
