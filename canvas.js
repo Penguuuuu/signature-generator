@@ -18,6 +18,23 @@ export function createCanvas() {
     }
     context.fillRect(0, 0, canvas.width, canvas.height);
 
+    const checkboxStripes = document.getElementById('checkboxStripes');
+    if (checkboxStripes.checked) {
+        const stripeSpacing = 5;
+        const stripeColor = 'rgba(255,255,255,0.5)';
+        const stripeWidth = 1;
+
+        context.strokeStyle = stripeColor;
+        context.lineWidth = stripeWidth;
+
+        for (let x = 0; x <= canvas.width + canvas.height; x += stripeSpacing) {
+            context.beginPath();
+            context.moveTo(x, 0);
+            context.lineTo(x - canvas.height, canvas.height);
+            context.stroke();
+        }
+    }
+
     const text = "Touhou Enjoyer";
     context.font = '10px visitor';
     context.textAlign = 'center';

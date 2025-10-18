@@ -36,5 +36,12 @@ new FontFace("visitor", "url(visitor.ttf)")
             });
             document.body.appendChild(checkboxBorderText);
 
+            const checkboxStripes = createCheckbox({
+                label: 'Stripes',
+                id: 'checkboxStripes',
+                defaultValue: true
+            });
+            document.body.appendChild(checkboxStripes);
+
             createCanvas();
         });
