@@ -143,7 +143,7 @@ export function createCheckbox({ label, id, defaultValue }) {
         cursor: 'pointer',
         position: 'relative'
     });
-    checkbox.addEventListener('mouseenter', () => checkbox.style.backgroundColor = '#222');
+    checkbox.addEventListener('mouseenter', () => checkbox.style.backgroundColor = checkbox.checked ? '#444' : '#222');
     checkbox.addEventListener('mouseleave', () => checkbox.style.backgroundColor = checkbox.checked ? '#333' : '#111');
     checkbox.addEventListener('change', () => {
         tick.style.display = checkbox.checked ? 'block' : 'none';
@@ -203,6 +203,48 @@ export function createTextbox({ label, id, defaultValue }) {
     textbox.addEventListener('input', () => createCanvas());
 
     container.append(labelElement, textbox);
+    return container;
+}
+
+export function createImageInput() {
+    const container = document.createElement('div');
+    Object.assign(container.style, {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '2px'
+    });
+
+    const labelElement = document.createElement('label');
+    labelElement.htmlFor = 'imageInput';
+    labelElement.textContent = 'Image Selector';
+    labelElement.style.color = '#fff';
+
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.id = 'imageInput';
+    input.accept = 'image/*';
+    input.style.display = 'none';
+    input.addEventListener('change', () => createCanvas());
+
+    const button = document.createElement('button');
+    button.textContent = 'Choose Image';
+    Object.assign(button.style, {
+        background: '#333',
+        color: 'white',
+        border: '1px solid #444',
+        borderRadius: '0',
+        padding: '4px',
+        cursor: 'pointer',
+        font: 'inherit'
+    });
+    button.addEventListener('mouseenter', () => button.style.backgroundColor = '#444');
+    button.addEventListener('mouseleave', () => button.style.backgroundColor = '#333');
+    button.addEventListener('mousedown', () => button.style.transform = 'scale(0.98)');
+    button.addEventListener('mouseup', () => button.style.transform = 'scale(1)');
+    button.addEventListener('click', () => input.click());
+
+    container.append(labelElement, button, input);
     return container;
 }
 

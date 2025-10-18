@@ -1,4 +1,4 @@
-import { createDropdown, createCheckbox, createTextbox } from './ui.js';
+import { createDropdown, createCheckbox, createTextbox, createImageInput } from './ui.js';
 import { createCanvas } from './canvas.js';
 
 new FontFace('visitor', 'url(visitor.ttf)')
@@ -50,14 +50,18 @@ new FontFace('visitor', 'url(visitor.ttf)')
                 defaultValue: true
             });
 
+            const imageInputElement = createImageInput();
+
             const tools = document.getElementById('tools');
             tools.append(
+                imageInputElement,
                 textBox,
                 dropdownText,
                 dropdownBackground,
                 checkboxBorder,
                 checkboxBorderText,
-                checkboxStripes, checkboxShine
+                checkboxStripes,
+                checkboxShine
             );
 
             createCanvas();

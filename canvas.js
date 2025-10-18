@@ -1,4 +1,4 @@
-export function createCanvas() {
+export async function createCanvas() {
     const container = document.getElementById('preview');
     container.innerHTML = '';
 
@@ -22,7 +22,7 @@ export function createCanvas() {
     const checkboxStripes = document.getElementById('checkboxStripes');
     if (checkboxStripes.checked) {
         const stripeSpacing = 5;
-        const stripeColor = 'rgba(255,255,255,0.5)';
+        const stripeColor = 'rgba(255,255,255,0.2)';
         const stripeWidth = 1;
 
         context.strokeStyle = stripeColor;
@@ -43,6 +43,18 @@ export function createCanvas() {
     context.textBaseline = 'middle';
     const measure = context.measureText(text);
     const typeText = document.getElementById('typeText').firstChild.textContent.toLowerCase();
+
+    const imageInput = document.getElementById('imageInput');
+    if (imageInput.files.length > 0) {
+        const image = await new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = URL.createObjectURL(imageInput.files[0]);
+        });
+
+        context.drawImage(image, (canvas.width - image.width) / 2, (canvas.height - image.height) / 2, image.width, image.height);
+    }
 
     const checkboxBorderText = document.getElementById('checkboxBorderText');
     if (checkboxBorderText.checked) {
@@ -77,7 +89,7 @@ export function createCanvas() {
             0,
             true
         );
-        context.fillStyle = 'rgba(255,255,255,0.3)';
+        context.fillStyle = 'rgba(255,255,255,0.2)';
         context.fill();
     }
 
