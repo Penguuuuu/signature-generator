@@ -63,6 +63,22 @@ export function createCanvas() {
     }
     context.fillText(text, canvas.width / 2, canvas.height / 2);
 
+    const checkboxShine = document.getElementById('checkboxShine');
+    if (checkboxShine.checked) {
+        context.beginPath();
+        context.ellipse(
+            canvas.width / 2,
+            0,
+            canvas.width / 2, canvas.height / 2,
+            0,
+            Math.PI,
+            0,
+            true
+        );
+        context.fillStyle = 'rgba(255,255,255,0.3)';
+        context.fill();
+    }
+
     const checkboxBorder = document.getElementById('checkboxBorder');
     if (checkboxBorder.checked) {
         context.strokeStyle = 'black';

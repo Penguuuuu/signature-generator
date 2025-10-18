@@ -43,5 +43,12 @@ new FontFace("visitor", "url(visitor.ttf)")
             });
             document.body.appendChild(checkboxStripes);
 
+            const checkboxShine = createCheckbox({
+                label: 'Shine',
+                id: 'checkboxShine',
+                defaultValue: true
+            });
+            document.body.appendChild(checkboxShine);
+
             createCanvas();
         });
