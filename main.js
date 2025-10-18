@@ -5,6 +5,14 @@ new FontFace("visitor", "url(visitor.ttf)")
         .load()
         .then(font => {
             document.fonts.add(font);
+
+            const buttonBorder = createButton({
+                label: 'Border',
+                id: 'buttonBorder',
+                defaultValue: true
+            });
+            document.body.appendChild(buttonBorder);
+
             const dropdownText = createDropdown({
                 label: 'Text Type',
                 options: ['solid', 'gradient'],
@@ -13,12 +21,12 @@ new FontFace("visitor", "url(visitor.ttf)")
             });
             document.body.appendChild(dropdownText);
 
-            const buttonText = createButton({
-                label: 'Border',
-                id: 'buttonBorder',
+            const buttonBorderText = createButton({
+                label: 'Text Border',
+                id: 'buttonBorderText',
                 defaultValue: true
             });
-            document.body.appendChild(buttonText);
+            document.body.appendChild(buttonBorderText);
 
             createCanvas();
         });

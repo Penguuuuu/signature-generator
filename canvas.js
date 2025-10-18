@@ -18,6 +18,13 @@ export function createCanvas() {
     const measure = context.measureText(text);
     const typeText = document.getElementById('typeText').firstChild.textContent.toLowerCase();
 
+    const buttonBorderText = document.getElementById('buttonBorderText')?.dataset.active;
+    if (buttonBorderText === 'true') {
+        context.strokeStyle = 'black';
+        context.lineWidth = 2;
+        context.strokeText(text, canvas.width / 2, canvas.height / 2);
+    }
+
     if (typeText === 'solid') context.fillStyle = '#fff';
     else {
         const gradient = context.createLinearGradient(
@@ -30,6 +37,10 @@ export function createCanvas() {
         gradient.addColorStop(1, '#888');
         context.fillStyle = gradient;
     }
+    context.fillText(text, canvas.width / 2, canvas.height / 2);
+
+
+
     const buttonBorder = document.getElementById('buttonBorder')?.dataset.active;
     if (buttonBorder === 'true') {
         context.strokeStyle = 'black';
@@ -37,5 +48,5 @@ export function createCanvas() {
         context.strokeRect(0, 0, canvas.width, canvas.height);
     }
 
-    context.fillText(text, canvas.width / 2, canvas.height / 2);
+
 }
