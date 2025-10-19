@@ -83,42 +83,43 @@ export function createDropdown({ label, options, id, defaultValue }) {
     return container;
 }
 
-export function createButton({ label, id, defaultValue }) {
-    const container = document.createElement('div');
-    Object.assign(container.style, {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '2px'
-    });
-
-    const labelElement = document.createElement('label');
-    labelElement.htmlFor = id;
-    labelElement.textContent = label;
-
+export function createButton({ label = '', id, text = '' }) {
     const button = document.createElement('button');
     button.id = id;
-    button.dataset.active = defaultValue;
-    button.textContent = helpers.uppercase(button.dataset.active);
+    button.textContent = text;
     Object.assign(button.style, {
         backgroundColor: '#333',
         color: 'white',
         border: '1px solid #444',
         borderRadius: '0',
         padding: '2px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        font: 'inherit'
     });
-    button.addEventListener('mouseenter', () => button.style.backgroundColor = '#222');
+    button.addEventListener('mouseenter', () => button.style.backgroundColor = '#444');
     button.addEventListener('mouseleave', () => button.style.backgroundColor = '#333');
-    button.addEventListener('click', () => {
-        button.dataset.active = button.dataset.active === 'true' ? 'false' : 'true';
-        button.textContent = helpers.uppercase(button.dataset.active);
-        createCanvas();
-    });
+    button.addEventListener('mousedown', () => button.style.transform = 'scale(0.98)');
+    button.addEventListener('mouseup', () => button.style.transform = 'scale(1)');
 
-    container.appendChild(labelElement);
-    container.appendChild(button);
-    return container;
+    if (label) {
+        const container = document.createElement('div');
+        Object.assign(container.style, {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '2px'
+        });
+
+        const labelElement = document.createElement('label');
+        labelElement.htmlFor = id;
+        labelElement.textContent = label;
+
+        container.appendChild(labelElement);
+        container.appendChild(button);
+        return container;
+    }
+
+    return button;
 }
 
 export function createCheckbox({ label, id, defaultValue }) {
@@ -206,7 +207,7 @@ export function createTextbox({ label, id, defaultValue }) {
     return container;
 }
 
-export function createImageInput() {
+export function createImageSection() {
     const container = document.createElement('div');
     Object.assign(container.style, {
         display: 'flex',
@@ -215,11 +216,6 @@ export function createImageInput() {
         gap: '2px'
     });
 
-    const labelElement = document.createElement('label');
-    labelElement.htmlFor = 'imageInput';
-    labelElement.textContent = 'Image Selector';
-    labelElement.style.color = '#fff';
-
     const input = document.createElement('input');
     input.type = 'file';
     input.id = 'imageInput';
@@ -227,24 +223,10 @@ export function createImageInput() {
     input.style.display = 'none';
     input.addEventListener('change', () => createCanvas());
 
-    const button = document.createElement('button');
-    button.textContent = 'Choose Image';
-    Object.assign(button.style, {
-        background: '#333',
-        color: 'white',
-        border: '1px solid #444',
-        borderRadius: '0',
-        padding: '4px',
-        cursor: 'pointer',
-        font: 'inherit'
-    });
-    button.addEventListener('mouseenter', () => button.style.backgroundColor = '#444');
-    button.addEventListener('mouseleave', () => button.style.backgroundColor = '#333');
-    button.addEventListener('mousedown', () => button.style.transform = 'scale(0.98)');
-    button.addEventListener('mouseup', () => button.style.transform = 'scale(1)');
+    const button = createButton({ id: 'buttonImage', text: 'Select Image', label: 'Image Selector' });
     button.addEventListener('click', () => input.click());
 
-    container.append(labelElement, button, input);
+    container.append(button, input);
     return container;
 }
 
@@ -269,35 +251,10 @@ export function createTextSection() {
         alignItems: 'center',
     });
 
-    const buttonCenterHorizontal = document.createElement('button');
-    buttonCenterHorizontal.id = 'buttonCenterHorizontal';
-    buttonCenterHorizontal.textContent = 'Center Horizontal';
-    Object.assign(buttonCenterHorizontal.style, {
-        backgroundColor: '#333',
-        color: 'white',
-        border: '1px solid #444',
-        borderRadius: '0',
-        padding: '2px',
-        cursor: 'pointer'
-    });
-    buttonCenterHorizontal.addEventListener('mouseenter', () => buttonCenterHorizontal.style.backgroundColor = '#222');
-    buttonCenterHorizontal.addEventListener('mouseleave', () => buttonCenterHorizontal.style.backgroundColor = '#333');
+    const buttonHorizontal = createButton({ id: 'buttonHorizontal', text: 'Center Horizontal' });
+    const buttonVertical = createButton({ id: 'buttonVertical', text: 'Center Vertical' });
 
-    const buttonCenterVertical = document.createElement('button');
-    buttonCenterVertical.id = 'buttonCenterVertical';
-    buttonCenterVertical.textContent = 'Center Vertical';
-    Object.assign(buttonCenterVertical.style, {
-        backgroundColor: '#333',
-        color: 'white',
-        border: '1px solid #444',
-        borderRadius: '0',
-        padding: '2px',
-        cursor: 'pointer'
-    });
-    buttonCenterVertical.addEventListener('mouseenter', () => buttonCenterVertical.style.backgroundColor = '#222');
-    buttonCenterVertical.addEventListener('mouseleave', () => buttonCenterVertical.style.backgroundColor = '#333');
-
-    const createButton = (id) => {
+    const createButtons = (id) => {
         const button = document.createElement('button');
         button.id = id;
         Object.assign(button.style, {
@@ -352,10 +309,10 @@ export function createTextSection() {
         return input;
     };
 
-    const up = createButton('up');
-    const left = createButton('left');
-    const right = createButton('right');
-    const down = createButton('down');
+    const up = createButtons('up');
+    const left = createButtons('left');
+    const right = createButtons('right');
+    const down = createButtons('down');
     const inputX = createInput('x', 175);
     const inputY = createInput('y', 10);
 
@@ -363,7 +320,7 @@ export function createTextSection() {
     containerButtons.appendChild(createRow([left, right], '22px'));
     containerButtons.appendChild(createRow([down]));
     column.append(inputX, inputY);
-    containerButtonsCenter.append(buttonCenterHorizontal, buttonCenterVertical);
+    containerButtonsCenter.append(buttonHorizontal, buttonVertical);
     container.append(containerButtons, column, containerButtonsCenter);
 
     return container;

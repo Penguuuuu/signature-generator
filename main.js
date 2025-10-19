@@ -1,4 +1,4 @@
-import { createDropdown, createCheckbox, createTextbox, createImageInput, createTextSection } from './ui.js';
+import { createDropdown, createCheckbox, createTextbox, createImageSection, createTextSection } from './ui.js';
 import { createCanvas } from './canvas.js';
 
 export let textPosition = { x: 175, y: 10 };
@@ -52,14 +52,14 @@ new FontFace('visitor', 'url(visitor.ttf)')
                 defaultValue: true
             });
 
-            const imageInput = createImageInput();
+            const imageSection = createImageSection();
 
             const textSection = createTextSection();
 
             const tools = document.getElementById('tools');
             tools.append(
                 textSection,
-                imageInput,
+                imageSection,
                 textBox,
                 dropdownText,
                 dropdownBackground,
@@ -72,13 +72,13 @@ new FontFace('visitor', 'url(visitor.ttf)')
 
             createCanvas();
 
-            setTextArea();
+            setTextSection();
 
         });
 
 
 
-function setTextArea() {
+function setTextSection() {
     const buttons = {
         up: document.getElementById('up'),
         down: document.getElementById('down'),
@@ -123,14 +123,14 @@ function setTextArea() {
         fields.y.value = 20 - textPosition.y;
     }
 
-    const buttonHorizontal = document.getElementById('buttonCenterHorizontal');
+    const buttonHorizontal = document.getElementById('buttonHorizontal');
     buttonHorizontal.addEventListener('click', () => {
         textPosition.x = 175;
         createCanvas();
         updateFields();
     });
 
-    const buttonVertical = document.getElementById('buttonCenterVertical');
+    const buttonVertical = document.getElementById('buttonVertical');
     buttonVertical.addEventListener('click', () => {
         textPosition.y = 10;
         createCanvas();
