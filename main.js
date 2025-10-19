@@ -79,8 +79,6 @@ new FontFace('visitor', 'url(visitor.ttf)')
 
         });
 
-
-
 function setTextSection() {
     const buttons = {
         up: document.getElementById('up'),
@@ -92,6 +90,11 @@ function setTextSection() {
     const fields = {
         x: document.getElementById('x'),
         y: document.getElementById('y'),
+    }
+
+    function updateFields() {
+        fields.x.value = textPosition.x;
+        fields.y.value = 20 - textPosition.y;
     }
 
     function holdButton(button, callback) {
@@ -121,20 +124,13 @@ function setTextSection() {
         });
     });
 
-    function updateFields() {
-        fields.x.value = textPosition.x;
-        fields.y.value = 20 - textPosition.y;
-    }
-
-    const buttonHorizontal = document.getElementById('buttonHorizontal');
-    buttonHorizontal.addEventListener('click', () => {
+    document.getElementById('buttonHorizontal').addEventListener('click', () => {
         textPosition.x = 175;
         createCanvas();
         updateFields();
     });
 
-    const buttonVertical = document.getElementById('buttonVertical');
-    buttonVertical.addEventListener('click', () => {
+    document.getElementById('buttonVertical').addEventListener('click', () => {
         textPosition.y = 10;
         createCanvas();
         updateFields();
