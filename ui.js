@@ -99,7 +99,10 @@ export function createButton({label = '', id, text = '', width = 'max-content', 
         font: 'inherit'
     });
     button.addEventListener('mouseenter', () => button.style.backgroundColor = '#444');
-    button.addEventListener('mouseleave', () => button.style.backgroundColor = '#333');
+    button.addEventListener('mouseleave', () => {
+        button.style.backgroundColor = '#333';
+        button.style.transform = 'scale(1)';
+    });
     button.addEventListener('mousedown', () => button.style.transform = 'scale(0.98)');
     button.addEventListener('mouseup', () => button.style.transform = 'scale(1)');
 
