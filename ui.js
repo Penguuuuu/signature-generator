@@ -114,8 +114,7 @@ export function createButton({ label = '', id, text = '' }) {
         labelElement.htmlFor = id;
         labelElement.textContent = label;
 
-        container.appendChild(labelElement);
-        container.appendChild(button);
+        container.append(labelElement, button);
         return container;
     }
 
@@ -170,26 +169,14 @@ export function createCheckbox({ label, id, defaultValue }) {
     return container;
 }
 
-export function createTextbox({ label, id, defaultValue }) {
-    const container = document.createElement('div');
-    Object.assign(container.style, {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '2px'
-    });
-
-    const labelElement = document.createElement('label');
-    labelElement.htmlFor = id;
-    labelElement.textContent = label;
-
-    const textbox = document.createElement('input');
-    textbox.type = 'text';
-    textbox.id = id;
-    textbox.placeholder = 'Type here...';
-    textbox.value = defaultValue;
-    Object.assign(textbox.style, {
-        width: '200px',
+export function createInputText({ label = '', id, defaultValue, width, placeholder = ''}) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = id;
+    input.placeholder = placeholder;
+    input.value = defaultValue;
+    Object.assign(input.style, {
+        width: width,
         padding: '4px',
         border: '1px solid #444',
         color: '#fff',
@@ -199,12 +186,27 @@ export function createTextbox({ label, id, defaultValue }) {
         userSelect: 'text',
         font: 'inherit'
     });
-    textbox.addEventListener('mouseenter', () => textbox.style.backgroundColor = '#222');
-    textbox.addEventListener('mouseleave', () => textbox.style.backgroundColor = '#111');
-    textbox.addEventListener('input', () => createCanvas());
+    input.addEventListener('mouseenter', () => input.style.backgroundColor = '#222');
+    input.addEventListener('mouseleave', () => input.style.backgroundColor = '#111');
 
-    container.append(labelElement, textbox);
-    return container;
+    if (label) {
+        const container = document.createElement('div');
+        Object.assign(container.style, {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '2px'
+        });
+
+        const labelElement = document.createElement('label');
+        labelElement.htmlFor = id;
+        labelElement.textContent = label;
+
+        container.append(labelElement, input);
+        return container;
+    }
+
+    return input;
 }
 
 export function createImageSection() {
@@ -288,33 +290,12 @@ export function createTextSection() {
         alignItems: 'center'
     });
 
-    const createInput = (id, value) => {
-        const input = document.createElement('input');
-        input.id = id;
-        input.type = 'text';
-        input.value = value;
-        Object.assign(input.style, {
-            width: '50px',
-            padding: '4px',
-            border: '1px solid #444',
-            color: '#fff',
-            background: '#111',
-            outline: 'none',
-            cursor: 'text',
-            userSelect: 'text',
-            font: 'inherit',
-            textAlign: 'center'
-        });
-
-        return input;
-    };
-
     const up = createButtons('up');
     const left = createButtons('left');
     const right = createButtons('right');
     const down = createButtons('down');
-    const inputX = createInput('x', 175);
-    const inputY = createInput('y', 10);
+    const inputX = createInputText({id: 'x', defaultValue: 175, width: '50px'});
+    const inputY = createInputText({id: 'y', defaultValue: 10, width: '50px'});
 
     containerButtons.appendChild(createRow([up]));
     containerButtons.appendChild(createRow([left, right], '22px'));

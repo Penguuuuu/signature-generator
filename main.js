@@ -1,4 +1,4 @@
-import { createDropdown, createCheckbox, createTextbox, createImageSection, createTextSection } from './ui.js';
+import { createDropdown, createCheckbox, createInputText, createImageSection, createTextSection } from './ui.js';
 import { createCanvas } from './canvas.js';
 
 export let textPosition = { x: 175, y: 10 };
@@ -8,11 +8,14 @@ new FontFace('visitor', 'url(visitor.ttf)')
         .then(font => {
             document.fonts.add(font);
 
-            const textBox = createTextbox({
+            const inputText = createInputText({
                 label: 'Text Box',
                 id: 'textBox',
-                defaultValue: 'Touhou Enjoyer'
+                defaultValue: 'Touhou Enjoyer',
+                width: '200px',
+                placeholder: 'Type here...'
             });
+            inputText.addEventListener('input', () => createCanvas());
 
             const dropdownText = createDropdown({
                 label: 'Text Type',
@@ -60,7 +63,7 @@ new FontFace('visitor', 'url(visitor.ttf)')
             tools.append(
                 textSection,
                 imageSection,
-                textBox,
+                inputText,
                 dropdownText,
                 dropdownBackground,
                 checkboxBorder,
