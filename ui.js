@@ -248,3 +248,87 @@ export function createImageInput() {
     return container;
 }
 
+export function createTextSection() {
+    const container = document.createElement('div');
+    Object.assign(container.style, {
+        display: 'flex',
+        alignItems: 'center',
+    });
+
+    const containerButtons = document.createElement('div');
+    Object.assign(containerButtons.style, {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    });
+
+    const createButton = (id) => {
+        const button = document.createElement('button');
+        button.id = id;
+        Object.assign(button.style, {
+            width: '22px',
+            height: '22px',
+            backgroundColor: '#333',
+            color: '#000',
+            border: '1px solid #444',
+            borderRadius: '0',
+            padding: '2px',
+            cursor: 'pointer',
+        });
+        return button;
+    };
+
+    const createRow = (buttons, gap = '0') => {
+        const row = document.createElement('div');
+        Object.assign(row.style, {
+            display: 'flex',
+            alignItems: 'center',
+            gap,
+        });
+        for (let i = 0; i < buttons.length; i++) row.appendChild(buttons[i]);
+        return row;
+    };
+
+    const column = document.createElement('div');
+    Object.assign(column.style, {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    });
+
+    const createInput = (id, value) => {
+        const input = document.createElement('input');
+        input.id = id;
+        input.type = 'text';
+        input.value = value;
+        Object.assign(input.style, {
+            width: '50px',
+            padding: '4px',
+            border: '1px solid #444',
+            color: '#fff',
+            background: '#111',
+            outline: 'none',
+            cursor: 'text',
+            userSelect: 'text',
+            font: 'inherit',
+            textAlign: 'center'
+        });
+
+        return input;
+    };
+
+    const up = createButton('up');
+    const left = createButton('left');
+    const right = createButton('right');
+    const down = createButton('down');
+    const inputX = createInput('x', 175);
+    const inputY = createInput('y', 10);
+
+    containerButtons.appendChild(createRow([up]));
+    containerButtons.appendChild(createRow([left, right], '22px'));
+    containerButtons.appendChild(createRow([down]));
+    column.append(inputX, inputY);
+    container.append(containerButtons, column)
+
+    return container;
+}

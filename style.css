@@ -13,15 +13,15 @@ body {
     font-family: arial;
     image-rendering: pixelated;
     color: #fff;
-    background: #000;
+    background: #111;
 }
 
 #preview {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: max-content;
-    height: max-content;
+    width: 710px;
+    height: 75px;
     background: #fff;
     padding: 5px;
     gap: 5px;

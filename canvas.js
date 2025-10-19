@@ -1,3 +1,5 @@
+let textPosition = { x: 175, y: 10 };
+
 export async function createCanvas() {
     const container = document.getElementById('preview');
     container.innerHTML = '';
@@ -76,7 +78,7 @@ async function drawImage(context, canvas) {
     URL.revokeObjectURL(image.src);
 }
 
-function drawText(context, canvas) {
+function drawText(context) {
     const text = document.getElementById('textBox');
     if (!text.value) return;
 
@@ -89,7 +91,7 @@ function drawText(context, canvas) {
     if (checkbox.checked) {
         context.strokeStyle = '#000';
         context.lineWidth = 2;
-        context.strokeText(text.value, canvas.width / 2, canvas.height / 2);
+        context.strokeText(text.value, textPosition.x, textPosition.y);
     }
 
     const measure = context.measureText(text.value);
@@ -99,15 +101,15 @@ function drawText(context, canvas) {
     else {
         const gradient = context.createLinearGradient(
             0,
-            canvas.height / 2 - measure.actualBoundingBoxAscent + 1,
+            textPosition.y - measure.actualBoundingBoxAscent + 1,
             0,
-            canvas.height / 2 + measure.actualBoundingBoxDescent - 1
+            textPosition.y + measure.actualBoundingBoxDescent - 1
         );
         gradient.addColorStop(0, '#fff');
         gradient.addColorStop(1, '#888');
         context.fillStyle = gradient;
     }
-    context.fillText(text.value, canvas.width / 2, canvas.height / 2);
+    context.fillText(text.value, textPosition.x, textPosition.y);
 }
 
 function drawShine(context, canvas) {
@@ -148,3 +150,54 @@ function createLargeCanvas(canvas) {
 
     return canvasLarge;
 }
+
+window.onload = () => {
+    const buttons = {
+        up: document.getElementById('up'),
+        down: document.getElementById('down'),
+        left: document.getElementById('left'),
+        right: document.getElementById('right'),
+    };
+
+    const fields = {
+        x: document.getElementById('x'),
+        y: document.getElementById('y'),
+    }
+
+    function holdButton(button, callback) {
+        let intervalId, timeoutId;
+        const delay = 300;
+        const repeat = 50;
+
+        button.addEventListener('mousedown', () => {
+            callback();
+            timeoutId = setTimeout(() => intervalId = setInterval(callback, repeat), delay);
+        });
+
+        function clearTimers() {
+            clearTimeout(timeoutId);
+            clearInterval(intervalId);
+        }
+
+        button.addEventListener('mouseup', clearTimers);
+        button.addEventListener('mouseleave', clearTimers);
+    }
+
+    Object.keys(fields).forEach(field => {
+        fields[field].addEventListener('input', () => {
+            const value = parseInt(fields[field].value, 10);
+            textPosition[field] = field === 'y' ? 20 - value : value;
+            createCanvas();
+        });
+    });
+
+    function updateFields() {
+        fields.x.value = textPosition.x;
+        fields.y.value = 20 - textPosition.y;
+    }
+
+    holdButton(buttons.up, () => { textPosition.y -= 1; createCanvas(); updateFields(); });
+    holdButton(buttons.down, () => { textPosition.y += 1; createCanvas(); updateFields(); });
+    holdButton(buttons.left, () => { textPosition.x -= 1; createCanvas(); updateFields(); });
+    holdButton(buttons.right, () => { textPosition.x += 1; createCanvas(); updateFields(); });
+};
