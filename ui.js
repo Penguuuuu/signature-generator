@@ -1,7 +1,7 @@
 import { createCanvas } from './canvas.js';
 import { helpers } from './helpers.js';
 
-export function createDropdown({ label, options, id, defaultValue }) {
+export function createDropdown({label, options, id, defaultValue}) {
     function dropdownColor() {
         if (containerOptions.style.display === 'block') dropdown.style.backgroundColor = '#222';
         else dropdown.style.backgroundColor = '#111';
@@ -83,11 +83,13 @@ export function createDropdown({ label, options, id, defaultValue }) {
     return container;
 }
 
-export function createButton({ label = '', id, text = '' }) {
+export function createButton({label = '', id, text = '', width = 'max-content', height = 'max-content'}) {
     const button = document.createElement('button');
     button.id = id;
     button.textContent = text;
     Object.assign(button.style, {
+        width: width,
+        height: height,
         backgroundColor: '#333',
         color: 'white',
         border: '1px solid #444',
@@ -121,7 +123,7 @@ export function createButton({ label = '', id, text = '' }) {
     return button;
 }
 
-export function createCheckbox({ label, id, defaultValue }) {
+export function createCheckbox({label, id, defaultValue}) {
     const container = document.createElement('div');
     Object.assign(container.style, {
         display: 'flex',
@@ -169,7 +171,7 @@ export function createCheckbox({ label, id, defaultValue }) {
     return container;
 }
 
-export function createInputText({ label = '', id, defaultValue, width, placeholder = ''}) {
+export function createInputText({label = '', id, defaultValue, width, placeholder = ''}) {
     const input = document.createElement('input');
     input.type = 'text';
     input.id = id;
@@ -209,6 +211,19 @@ export function createInputText({ label = '', id, defaultValue, width, placehold
     return input;
 }
 
+export function createContainer({id, flexDirection, gap = ''}) {
+    const container = document.createElement('div');
+    container.id = id;
+    Object.assign(container.style, {
+        display: 'flex',
+        flexDirection: flexDirection,
+        alignItems: 'center',
+        gap: gap
+    });
+
+    return container;
+}
+
 export function createImageSection() {
     const container = document.createElement('div');
     Object.assign(container.style, {
@@ -233,76 +248,31 @@ export function createImageSection() {
 }
 
 export function createTextSection() {
-    const container = document.createElement('div');
-    Object.assign(container.style, {
-        display: 'flex',
-        alignItems: 'center',
-    });
+    const containerCenterButtons = createContainer({id: 'containerCenterButtons', flexDirection: 'column'});
+    const buttonHorizontal = createButton({id: 'buttonHorizontal', text: 'Center Horizontal'});
+    const buttonVertical = createButton({id: 'buttonVertical', text: 'Center Vertical'});
+    containerCenterButtons.append(buttonHorizontal, buttonVertical);
 
-    const containerButtons = document.createElement('div');
-    Object.assign(containerButtons.style, {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    });
+    const containerDirectionalButtons = createContainer({id: 'containerDirectionalButtons', flexDirection: 'column'});
+    const up = createButton({id: 'up', width: '22px', height: '22px'});
+    const left = createButton({id: 'left', width: '22px', height: '22px'});
+    const right = createButton({id: 'right', width: '22px', height: '22px'});
+    const down = createButton({id: 'down', width: '22px', height: '22px'});
+    const row1 = createContainer({flexDirection: 'row'});
+    row1.append(up);
+    const row2 = createContainer({flexDirection: 'row', gap: '22px'});
+    row2.append(left, right);
+    const row3 = createContainer({flexDirection: 'row'});
+    row3.append(down);
+    containerDirectionalButtons.append(row1, row2, row3);
 
-    const containerButtonsCenter = document.createElement('div');
-    Object.assign(containerButtonsCenter.style, {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    });
+    const containerCoordinates = createContainer({id: 'containerCoordinates', flexDirection: 'column'});
+    const x = createInputText({id: 'x', defaultValue: 175, width: '50px'});
+    const y = createInputText({id: 'y', defaultValue: 10, width: '50px'});
+    containerCoordinates.append(x, y);
 
-    const buttonHorizontal = createButton({ id: 'buttonHorizontal', text: 'Center Horizontal' });
-    const buttonVertical = createButton({ id: 'buttonVertical', text: 'Center Vertical' });
-
-    const createButtons = (id) => {
-        const button = document.createElement('button');
-        button.id = id;
-        Object.assign(button.style, {
-            width: '22px',
-            height: '22px',
-            backgroundColor: '#333',
-            color: '#000',
-            border: '1px solid #444',
-            borderRadius: '0',
-            padding: '2px',
-            cursor: 'pointer',
-        });
-        return button;
-    };
-
-    const createRow = (buttons, gap = '0') => {
-        const row = document.createElement('div');
-        Object.assign(row.style, {
-            display: 'flex',
-            alignItems: 'center',
-            gap,
-        });
-        for (let i = 0; i < buttons.length; i++) row.appendChild(buttons[i]);
-        return row;
-    };
-
-    const column = document.createElement('div');
-    Object.assign(column.style, {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-    });
-
-    const up = createButtons('up');
-    const left = createButtons('left');
-    const right = createButtons('right');
-    const down = createButtons('down');
-    const inputX = createInputText({id: 'x', defaultValue: 175, width: '50px'});
-    const inputY = createInputText({id: 'y', defaultValue: 10, width: '50px'});
-
-    containerButtons.appendChild(createRow([up]));
-    containerButtons.appendChild(createRow([left, right], '22px'));
-    containerButtons.appendChild(createRow([down]));
-    column.append(inputX, inputY);
-    containerButtonsCenter.append(buttonHorizontal, buttonVertical);
-    container.append(containerButtons, column, containerButtonsCenter);
+    const container = createContainer({id: 'container', flexDirection: 'row'});
+    container.append(containerDirectionalButtons, containerCoordinates, containerCenterButtons);
 
     return container;
 }
