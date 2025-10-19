@@ -259,11 +259,11 @@ export function createTextSection() {
     const right = createButton({id: 'right', width: '22px', height: '22px'});
     const down = createButton({id: 'down', width: '22px', height: '22px'});
     const row1 = createContainer({flexDirection: 'row'});
-    row1.append(up);
+    row1.appendChild(up);
     const row2 = createContainer({flexDirection: 'row', gap: '22px'});
     row2.append(left, right);
     const row3 = createContainer({flexDirection: 'row'});
-    row3.append(down);
+    row3.appendChild(down);
     containerDirectionalButtons.append(row1, row2, row3);
 
     const containerCoordinates = createContainer({id: 'containerCoordinates', flexDirection: 'column'});
