@@ -98,27 +98,28 @@ function setTextSection() {
     }
 
     function holdButton(button, callback) {
-        let intervalId, timeoutId;
+        let interval;
+        let timeout;
         const delay = 300;
-        const repeat = 50;
+        const repeat = 40;
+
+        function clear() {
+            clearTimeout(timeout);
+            clearInterval(interval);
+        }
 
         button.addEventListener('mousedown', () => {
             callback();
-            timeoutId = setTimeout(() => intervalId = setInterval(callback, repeat), delay);
+            timeout = setTimeout(() => interval = setInterval(callback, repeat), delay);
         });
 
-        function clearTimers() {
-            clearTimeout(timeoutId);
-            clearInterval(intervalId);
-        }
-
-        button.addEventListener('mouseup', clearTimers);
-        button.addEventListener('mouseleave', clearTimers);
+        button.addEventListener('mouseup', clear);
+        button.addEventListener('mouseleave', clear);
     }
 
-    Object.keys(fields).forEach(field => {
-        fields[field].addEventListener('input', () => {
-            const value = parseInt(fields[field].value, 10);
+    Object.entries(fields).forEach(([field, input]) => {
+        input.addEventListener('input', () => {
+            const value = parseInt(input.value, 10);
             textPosition[field] = field === 'y' ? 20 - value : value;
             createCanvas();
         });
