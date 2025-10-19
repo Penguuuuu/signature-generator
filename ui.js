@@ -3,8 +3,8 @@ import { helpers } from './helpers.js';
 
 export function createDropdown({label, options, id, defaultValue}) {
     function dropdownColor() {
-        if (containerOptions.style.display === 'block') dropdown.style.backgroundColor = '#222';
-        else dropdown.style.backgroundColor = '#111';
+        if (containerOptions.style.display === 'block') dropdown.style.background = '#222';
+        else dropdown.style.background = '#111';
     }
 
     const container = document.createElement('div');
@@ -26,11 +26,11 @@ export function createDropdown({label, options, id, defaultValue}) {
         width: '200px',
         padding: '4px',
         border: '1px solid #444',
-        backgroundColor: '#111',
+        background: '#111',
         cursor: 'pointer',
         userSelect: 'none'
     });
-    dropdown.addEventListener('mouseenter', () => dropdown.style.backgroundColor = '#222');
+    dropdown.addEventListener('mouseenter', () => dropdown.style.background = '#222');
     dropdown.addEventListener('mouseleave', () => dropdownColor());
     dropdown.addEventListener('click', (e) => {
         containerOptions.style.display = containerOptions.style.display === 'none' ? 'block' : 'none';
@@ -51,7 +51,7 @@ export function createDropdown({label, options, id, defaultValue}) {
         width: 'calc(100% + 2px)',
         border: '1px solid #444',
         borderTop: '0',
-        backgroundColor: '#111',
+        background: '#111',
         userSelect: 'none',
         zIndex: 1000
     });
@@ -63,8 +63,8 @@ export function createDropdown({label, options, id, defaultValue}) {
             padding: '4px',
             cursor: 'pointer'
         });
-        item.addEventListener('mouseenter', () => item.style.backgroundColor = '#333');
-        item.addEventListener('mouseleave', () => item.style.backgroundColor = '');
+        item.addEventListener('mouseenter', () => item.style.background = '#333');
+        item.addEventListener('mouseleave', () => item.style.background = '');
         item.addEventListener('click', () => {
             selected.textContent = item.textContent;
             dropdownColor();
@@ -90,17 +90,17 @@ export function createButton({label = '', id, text = '', width = 'max-content', 
     Object.assign(button.style, {
         width: width,
         height: height,
-        backgroundColor: '#333',
-        color: 'white',
+        color: '#fff',
+        background: '#333',
         border: '1px solid #444',
         borderRadius: '0',
         padding: '2px',
         cursor: 'pointer',
         font: 'inherit'
     });
-    button.addEventListener('mouseenter', () => button.style.backgroundColor = '#444');
+    button.addEventListener('mouseenter', () => button.style.background = '#444');
     button.addEventListener('mouseleave', () => {
-        button.style.backgroundColor = '#333';
+        button.style.background = '#333';
         button.style.transform = 'scale(1)';
     });
     button.addEventListener('mousedown', () => button.style.transform = 'scale(0.98)');
@@ -148,11 +148,11 @@ export function createCheckbox({label, id, defaultValue}) {
         cursor: 'pointer',
         position: 'relative'
     });
-    checkbox.addEventListener('mouseenter', () => checkbox.style.backgroundColor = checkbox.checked ? '#444' : '#222');
-    checkbox.addEventListener('mouseleave', () => checkbox.style.backgroundColor = checkbox.checked ? '#333' : '#111');
+    checkbox.addEventListener('mouseenter', () => checkbox.style.background = checkbox.checked ? '#444' : '#222');
+    checkbox.addEventListener('mouseleave', () => checkbox.style.background = checkbox.checked ? '#333' : '#111');
     checkbox.addEventListener('change', () => {
         tick.style.display = checkbox.checked ? 'block' : 'none';
-        checkbox.style.backgroundColor = checkbox.checked ? '#333' : '#111';
+        checkbox.style.background = checkbox.checked ? '#333' : '#111';
         createCanvas();
     });
 
@@ -191,8 +191,8 @@ export function createInputText({label = '', id, defaultValue, width, placeholde
         userSelect: 'text',
         font: 'inherit'
     });
-    input.addEventListener('mouseenter', () => input.style.backgroundColor = '#222');
-    input.addEventListener('mouseleave', () => input.style.backgroundColor = '#111');
+    input.addEventListener('mouseenter', () => input.style.background = '#222');
+    input.addEventListener('mouseleave', () => input.style.background = '#111');
 
     if (label) {
         const container = document.createElement('div');
