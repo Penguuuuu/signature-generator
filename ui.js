@@ -262,6 +262,41 @@ export function createTextSection() {
         alignItems: 'center',
     });
 
+    const containerButtonsCenter = document.createElement('div');
+    Object.assign(containerButtonsCenter.style, {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    });
+
+    const buttonCenterHorizontal = document.createElement('button');
+    buttonCenterHorizontal.id = 'buttonCenterHorizontal';
+    buttonCenterHorizontal.textContent = 'Center Horizontal';
+    Object.assign(buttonCenterHorizontal.style, {
+        backgroundColor: '#333',
+        color: 'white',
+        border: '1px solid #444',
+        borderRadius: '0',
+        padding: '2px',
+        cursor: 'pointer'
+    });
+    buttonCenterHorizontal.addEventListener('mouseenter', () => buttonCenterHorizontal.style.backgroundColor = '#222');
+    buttonCenterHorizontal.addEventListener('mouseleave', () => buttonCenterHorizontal.style.backgroundColor = '#333');
+
+    const buttonCenterVertical = document.createElement('button');
+    buttonCenterVertical.id = 'buttonCenterVertical';
+    buttonCenterVertical.textContent = 'Center Vertical';
+    Object.assign(buttonCenterVertical.style, {
+        backgroundColor: '#333',
+        color: 'white',
+        border: '1px solid #444',
+        borderRadius: '0',
+        padding: '2px',
+        cursor: 'pointer'
+    });
+    buttonCenterVertical.addEventListener('mouseenter', () => buttonCenterVertical.style.backgroundColor = '#222');
+    buttonCenterVertical.addEventListener('mouseleave', () => buttonCenterVertical.style.backgroundColor = '#333');
+
     const createButton = (id) => {
         const button = document.createElement('button');
         button.id = id;
@@ -328,7 +363,8 @@ export function createTextSection() {
     containerButtons.appendChild(createRow([left, right], '22px'));
     containerButtons.appendChild(createRow([down]));
     column.append(inputX, inputY);
-    container.append(containerButtons, column)
+    containerButtonsCenter.append(buttonCenterHorizontal, buttonCenterVertical);
+    container.append(containerButtons, column, containerButtonsCenter);
 
     return container;
 }
