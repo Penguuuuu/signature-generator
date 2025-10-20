@@ -285,7 +285,7 @@ export function createStripesSection() {
 
     const thickness = createInputText({id: 'stripesThickness', width: '50px', flexDirection: 'row', label: 'Stripes Thickness:'});
     const gap = createInputText({id: 'stripesGap', width: '50px', flexDirection: 'row', label: 'Stripes Gap:'});
-    const color = createInputText({id: 'stripesColor', width: 'max-content', flexDirection: 'row', label: 'Stripes Gap:'});
+    const color = createInputText({id: 'stripesColor', width: 'max-content', flexDirection: 'row', label: 'Stripes Color:'});
 
     container.append(thickness, gap, color);
     return container;
