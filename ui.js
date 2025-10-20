@@ -283,11 +283,10 @@ export function createTextSection() {
 export function createStripesSection() {
     const container = createContainer({id: 'containerStripes', flexDirection: 'column', alignItems: 'left'});
 
-    const stripesThickness = createInputText({id: 'stripesThickness', width: '50px', flexDirection: 'row', label: 'Stripes Thickness:'});
-    const stripesGap = createInputText({id: 'stripesGap', width: '50px', flexDirection: 'row', label: 'Stripes Gap:'});
-    const stripesColor = createInputText({id: 'stripesColor', width: 'max-content', flexDirection: 'row', label: 'Stripes Gap:'});
+    const thickness = createInputText({id: 'stripesThickness', width: '50px', flexDirection: 'row', label: 'Stripes Thickness:'});
+    const gap = createInputText({id: 'stripesGap', width: '50px', flexDirection: 'row', label: 'Stripes Gap:'});
+    const color = createInputText({id: 'stripesColor', width: 'max-content', flexDirection: 'row', label: 'Stripes Gap:'});
 
-    container.append(stripesThickness, stripesGap, stripesColor);
-
+    container.append(thickness, gap, color);
     return container;
 }
