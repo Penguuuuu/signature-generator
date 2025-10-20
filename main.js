@@ -38,9 +38,9 @@ new FontFace('visitor', 'url(visitor.ttf)')
                 defaultValue: true
             });
 
-            const checkboxBorderText = createCheckbox({
-                label: 'Text Border',
-                id: 'checkboxBorderText',
+            const checkboxOutlineText = createCheckbox({
+                label: 'Outline Text',
+                id: 'checkboxOutlineText',
                 defaultValue: true
             });
 
@@ -70,7 +70,7 @@ new FontFace('visitor', 'url(visitor.ttf)')
                 dropdownText,
                 dropdownBackground,
                 checkboxBorder,
-                checkboxBorderText,
+                checkboxOutlineText,
                 checkboxStripes,
                 checkboxShine,
 

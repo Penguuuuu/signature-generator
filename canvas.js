@@ -83,7 +83,7 @@ function drawText(context) {
     context.textAlign = 'center';
     context.textBaseline = 'middle';
 
-    const checkbox = document.getElementById('checkboxBorderText');
+    const checkbox = document.getElementById('checkboxOutlineText');
 
     if (checkbox.checked) {
         context.strokeStyle = '#000';
