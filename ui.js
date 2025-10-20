@@ -1,4 +1,4 @@
-import { createCanvas } from './canvas.js';
+import { updateCanvas } from './canvas.js';
 import { helpers } from './helpers.js';
 
 export function createDropdown({label, options, id, defaultValue}) {
@@ -68,7 +68,7 @@ export function createDropdown({label, options, id, defaultValue}) {
         item.addEventListener('click', () => {
             selected.textContent = item.textContent;
             dropdownColor();
-            createCanvas();
+            updateCanvas();
         });
         containerOptions.appendChild(item);
     });
@@ -153,7 +153,7 @@ export function createCheckbox({label, id, defaultValue}) {
     checkbox.addEventListener('change', () => {
         tick.style.display = checkbox.checked ? 'block' : 'none';
         checkbox.style.background = checkbox.checked ? '#333' : '#111';
-        createCanvas();
+        updateCanvas();
     });
 
     const tick = document.createElement('img');
@@ -241,7 +241,7 @@ export function createImageSection() {
     input.id = 'imageInput';
     input.accept = 'image/*';
     input.style.display = 'none';
-    input.addEventListener('change', () => createCanvas());
+    input.addEventListener('change', () => updateCanvas());
 
     const button = createButton({ id: 'buttonImage', text: 'Select Image', label: 'Image Selector' });
     button.addEventListener('click', () => input.click());

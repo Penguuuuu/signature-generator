@@ -1,11 +1,11 @@
 import { textConfig } from './main.js';
 import { stripesConfig } from './main.js';
 
-export async function createCanvas() {
+export async function updateCanvas() {
     const container = document.getElementById('preview');
     container.innerHTML = '';
 
-    const canvas = createBase(350, 20);
+    const canvas = createCanvas(350, 20);
     const context = canvas.getContext('2d');
 
     drawBackground(context, canvas);
@@ -19,7 +19,7 @@ export async function createCanvas() {
     container.append(canvas, canvasLarge);
 }
 
-function createBase(width, height) {
+function createCanvas(width, height) {
     const canvas = document.createElement('canvas');
     canvas.id = 'canvas';
     canvas.width = width;

@@ -1,5 +1,5 @@
 import { createDropdown, createCheckbox, createInputText, createImageSection, createTextSection, createStripesSection } from './ui.js';
-import { createCanvas } from './canvas.js';
+import { updateCanvas } from './canvas.js';
 
 export let textConfig = { x: 175, y: 10 };
 export let stripesConfig = { gap: 5, thickness: 1, color: '#FFFFFF22' };
@@ -16,7 +16,7 @@ new FontFace('visitor', 'url(visitor.ttf)')
                 width: '200px',
                 placeholder: 'Type here...'
             });
-            inputText.addEventListener('input', () => createCanvas());
+            inputText.addEventListener('input', () => updateCanvas());
 
             const dropdownText = createDropdown({
                 label: 'Text Type',
@@ -76,7 +76,7 @@ new FontFace('visitor', 'url(visitor.ttf)')
 
             );
 
-            createCanvas();
+            updateCanvas();
 
             setTextSection();
 
@@ -135,26 +135,26 @@ function setTextSection() {
     Object.values(fields).forEach(field => {
         field.addEventListener('input', () => {
             updateConfig();
-            createCanvas();
+            updateCanvas();
         });
     });
 
     document.getElementById('buttonHorizontal').addEventListener('click', () => {
         textConfig.x = initial.x;
         updateFields();
-        createCanvas();
+        updateCanvas();
     });
 
     document.getElementById('buttonVertical').addEventListener('click', () => {
         textConfig.y = initial.y;
         updateFields();
-        createCanvas();
+        updateCanvas();
     });
 
-    holdButton(buttons.up, () => { textConfig.y -= 1; updateFields(); createCanvas(); });
-    holdButton(buttons.down, () => { textConfig.y += 1; updateFields(); createCanvas(); });
-    holdButton(buttons.left, () => { textConfig.x -= 1; updateFields(); createCanvas(); });
-    holdButton(buttons.right, () => { textConfig.x += 1; updateFields(); createCanvas(); });
+    holdButton(buttons.up, () => { textConfig.y -= 1; updateFields(); updateCanvas(); });
+    holdButton(buttons.down, () => { textConfig.y += 1; updateFields(); updateCanvas(); });
+    holdButton(buttons.left, () => { textConfig.x -= 1; updateFields(); updateCanvas(); });
+    holdButton(buttons.right, () => { textConfig.x += 1; updateFields(); updateCanvas(); });
 
     updateFields();
 }
@@ -187,7 +187,7 @@ function setStripesSection() {
     Object.values(fields).forEach(field => {
         field.addEventListener('input', () => {
             updateConfig();
-            createCanvas();
+            updateCanvas();
         });
     });
 
