@@ -1,7 +1,8 @@
-import { createDropdown, createCheckbox, createInputText, createImageSection, createTextSection } from './ui.js';
+import { createDropdown, createCheckbox, createInputText, createImageSection, createTextSection, createStripesSection } from './ui.js';
 import { createCanvas } from './canvas.js';
 
 export let textPosition = { x: 175, y: 10 };
+export let stripesConfig = { gap: 5, thickness: 1, color: '#FFFFFF22' };
 
 new FontFace('visitor', 'url(visitor.ttf)')
         .load()
@@ -59,8 +60,11 @@ new FontFace('visitor', 'url(visitor.ttf)')
 
             const textSection = createTextSection();
 
+            const stripesSection = createStripesSection();
+
             const tools = document.getElementById('tools');
             tools.append(
+                stripesSection,
                 textSection,
                 imageSection,
                 inputText,
@@ -76,6 +80,8 @@ new FontFace('visitor', 'url(visitor.ttf)')
             createCanvas();
 
             setTextSection();
+
+            setStripesSection();
 
         });
 
@@ -141,4 +147,37 @@ function setTextSection() {
     holdButton(buttons.down, () => { textPosition.y += 1; createCanvas(); updateFields(); });
     holdButton(buttons.left, () => { textPosition.x -= 1; createCanvas(); updateFields(); });
     holdButton(buttons.right, () => { textPosition.x += 1; createCanvas(); updateFields(); });
+}
+
+function setStripesSection() {
+    let fields = {
+        thickness: document.getElementById('stripesThickness'),
+        gap: document.getElementById('stripesGap'),
+        color: document.getElementById('stripesColor')
+    };
+
+    const initial = {
+        thickness: stripesConfig.thickness,
+        gap: stripesConfig.gap,
+        color: stripesConfig.color
+    };
+
+    fields.thickness.value = initial.thickness;
+    fields.gap.value = initial.gap;
+    fields.color.value = initial.color;
+
+    function update() {
+        stripesConfig.thickness = parseInt(fields.thickness.value) || initial.thickness;
+        stripesConfig.gap = parseInt(fields.gap.value) || initial.gap;
+        stripesConfig.color = fields.color.value || initial.color;
+    }
+
+    update();
+
+    Object.values(fields).forEach(field => {
+        field.addEventListener('input', () => {
+            update();
+            createCanvas();
+        });
+    });
 }

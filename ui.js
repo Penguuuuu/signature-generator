@@ -174,7 +174,7 @@ export function createCheckbox({label, id, defaultValue}) {
     return container;
 }
 
-export function createInputText({label = '', id, defaultValue, width, placeholder = ''}) {
+export function createInputText({label = '', flexDirection = 'column', id, defaultValue = '', width, placeholder = ''}) {
     const input = document.createElement('input');
     input.type = 'text';
     input.id = id;
@@ -198,7 +198,7 @@ export function createInputText({label = '', id, defaultValue, width, placeholde
         const container = document.createElement('div');
         Object.assign(container.style, {
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: flexDirection,
             alignItems: 'center',
             gap: '2px'
         });
@@ -214,13 +214,13 @@ export function createInputText({label = '', id, defaultValue, width, placeholde
     return input;
 }
 
-export function createContainer({id, flexDirection, gap = ''}) {
+export function createContainer({id, flexDirection, gap = '', alignItems = 'center'}) {
     const container = document.createElement('div');
     container.id = id;
     Object.assign(container.style, {
         display: 'flex',
         flexDirection: flexDirection,
-        alignItems: 'center',
+        alignItems: alignItems,
         gap: gap
     });
 
@@ -270,12 +270,24 @@ export function createTextSection() {
     containerDirectionalButtons.append(row1, row2, row3);
 
     const containerCoordinates = createContainer({id: 'containerCoordinates', flexDirection: 'column'});
-    const x = createInputText({id: 'x', defaultValue: 175, width: '50px'});
-    const y = createInputText({id: 'y', defaultValue: 10, width: '50px'});
+    const x = createInputText({id: 'x', defaultValue: 175, width: '50px', flexDirection: 'row', label: 'X:'});
+    const y = createInputText({id: 'y', defaultValue: 10, width: '50px', flexDirection: 'row', label: 'Y:'});
     containerCoordinates.append(x, y);
 
     const container = createContainer({id: 'container', flexDirection: 'row'});
     container.append(containerDirectionalButtons, containerCoordinates, containerCenterButtons);
+
+    return container;
+}
+
+export function createStripesSection() {
+    const container = createContainer({id: 'containerStripes', flexDirection: 'column', alignItems: 'left'});
+
+    const stripesThickness = createInputText({id: 'stripesThickness', width: '50px', flexDirection: 'row', label: 'Stripes Thickness:'});
+    const stripesGap = createInputText({id: 'stripesGap', width: '50px', flexDirection: 'row', label: 'Stripes Gap:'});
+    const stripesColor = createInputText({id: 'stripesColor', width: 'max-content', flexDirection: 'row', label: 'Stripes Gap:'});
+
+    container.append(stripesThickness, stripesGap, stripesColor);
 
     return container;
 }

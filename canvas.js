@@ -1,4 +1,5 @@
 import { textPosition } from './main.js';
+import { stripesConfig } from './main.js';
 
 export async function createCanvas() {
     const container = document.getElementById('preview');
@@ -44,14 +45,10 @@ function drawStripes(context, canvas) {
     const checkbox = document.getElementById('checkboxStripes');
     if (!checkbox.checked) return;
 
-    const stripeSpacing = 5;
-    const stripeColor = 'rgba(255,255,255,0.2)';
-    const stripeWidth = 1;
+    context.strokeStyle = stripesConfig.color;
+    context.lineWidth = stripesConfig.thickness;
 
-    context.strokeStyle = stripeColor;
-    context.lineWidth = stripeWidth;
-
-    for (let x = 0; x <= canvas.width + canvas.height; x += stripeSpacing) {
+    for (let x = 0; x <= canvas.width + canvas.height; x += stripesConfig.gap) {
         context.beginPath();
         context.moveTo(x, 0);
         context.lineTo(x - canvas.height, canvas.height);
