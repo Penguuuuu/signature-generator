@@ -98,6 +98,11 @@ function setTextSection() {
         y: document.getElementById('y'),
     }
 
+    const initial = {
+        x: textConfig.x,
+        y: textConfig.y,
+    };
+
     function updateFields() {
         fields.x.value = textConfig.x;
         fields.y.value = 20 - textConfig.y;
@@ -136,13 +141,13 @@ function setTextSection() {
     });
 
     document.getElementById('buttonHorizontal').addEventListener('click', () => {
-        textConfig.x = 175;
+        textConfig.x = initial.x;
         updateFields();
         createCanvas();
     });
 
     document.getElementById('buttonVertical').addEventListener('click', () => {
-        textConfig.y = 10;
+        textConfig.y = initial.y;
         updateFields();
         createCanvas();
     });
@@ -169,9 +174,9 @@ function setStripesSection() {
     };
 
     function updateFields() {
-        fields.thickness.value = initial.thickness;
-        fields.gap.value = initial.gap;
-        fields.color.value = initial.color;
+        fields.thickness.value = stripesConfig.thickness;
+        fields.gap.value = stripesConfig.gap;
+        fields.color.value = stripesConfig.color;
     }
 
     function updateConfig() {
