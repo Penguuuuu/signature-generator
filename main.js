@@ -62,8 +62,7 @@ new FontFace('visitor', 'url(visitor.ttf)')
 
             const stripesSection = createStripesSection();
 
-            const tools = document.getElementById('tools');
-            tools.append(
+            document.getElementById('tools').append(
                 stripesSection,
                 textSection,
                 imageSection,
