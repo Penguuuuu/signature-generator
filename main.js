@@ -1,7 +1,7 @@
 import { createDropdown, createCheckbox, createInputText, createImageSection, createTextSection, createStripesSection } from './ui.js';
 import { createCanvas } from './canvas.js';
 
-export let textPosition = { x: 175, y: 10 };
+export let textConfig = { x: 175, y: 10 };
 export let stripesConfig = { gap: 5, thickness: 1, color: '#FFFFFF22' };
 
 new FontFace('visitor', 'url(visitor.ttf)')
@@ -99,8 +99,13 @@ function setTextSection() {
     }
 
     function updateFields() {
-        fields.x.value = textPosition.x;
-        fields.y.value = 20 - textPosition.y;
+        fields.x.value = textConfig.x;
+        fields.y.value = 20 - textConfig.y;
+    }
+
+    function updateConfig() {
+        textConfig.x = parseInt(fields.x.value, 10);
+        textConfig.y = 20 - parseInt(fields.y.value, 10);
     }
 
     function holdButton(button, callback) {
@@ -123,30 +128,31 @@ function setTextSection() {
         button.addEventListener('mouseleave', clear);
     }
 
-    Object.entries(fields).forEach(([field, input]) => {
-        input.addEventListener('input', () => {
-            const value = parseInt(input.value, 10);
-            textPosition[field] = field === 'y' ? 20 - value : value;
+    Object.values(fields).forEach(field => {
+        field.addEventListener('input', () => {
+            updateConfig();
             createCanvas();
         });
     });
 
     document.getElementById('buttonHorizontal').addEventListener('click', () => {
-        textPosition.x = 175;
-        createCanvas();
+        textConfig.x = 175;
         updateFields();
+        createCanvas();
     });
 
     document.getElementById('buttonVertical').addEventListener('click', () => {
-        textPosition.y = 10;
-        createCanvas();
+        textConfig.y = 10;
         updateFields();
+        createCanvas();
     });
 
-    holdButton(buttons.up, () => { textPosition.y -= 1; createCanvas(); updateFields(); });
-    holdButton(buttons.down, () => { textPosition.y += 1; createCanvas(); updateFields(); });
-    holdButton(buttons.left, () => { textPosition.x -= 1; createCanvas(); updateFields(); });
-    holdButton(buttons.right, () => { textPosition.x += 1; createCanvas(); updateFields(); });
+    holdButton(buttons.up, () => { textConfig.y -= 1; updateFields(); createCanvas(); });
+    holdButton(buttons.down, () => { textConfig.y += 1; updateFields(); createCanvas(); });
+    holdButton(buttons.left, () => { textConfig.x -= 1; updateFields(); createCanvas(); });
+    holdButton(buttons.right, () => { textConfig.x += 1; updateFields(); createCanvas(); });
+
+    updateFields();
 }
 
 function setStripesSection() {
@@ -162,22 +168,24 @@ function setStripesSection() {
         color: stripesConfig.color
     };
 
-    fields.thickness.value = initial.thickness;
-    fields.gap.value = initial.gap;
-    fields.color.value = initial.color;
+    function updateFields() {
+        fields.thickness.value = initial.thickness;
+        fields.gap.value = initial.gap;
+        fields.color.value = initial.color;
+    }
 
-    function update() {
+    function updateConfig() {
         stripesConfig.thickness = parseInt(fields.thickness.value) || initial.thickness;
         stripesConfig.gap = parseInt(fields.gap.value) || initial.gap;
         stripesConfig.color = fields.color.value || initial.color;
     }
 
-    update();
-
     Object.values(fields).forEach(field => {
         field.addEventListener('input', () => {
-            update();
+            updateConfig();
             createCanvas();
         });
     });
+
+    updateFields();
 }

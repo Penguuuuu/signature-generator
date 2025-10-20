@@ -1,4 +1,4 @@
-import { textPosition } from './main.js';
+import { textConfig } from './main.js';
 import { stripesConfig } from './main.js';
 
 export async function createCanvas() {
@@ -88,7 +88,7 @@ function drawText(context) {
     if (checkbox.checked) {
         context.strokeStyle = '#000';
         context.lineWidth = 2;
-        context.strokeText(text.value, textPosition.x, textPosition.y);
+        context.strokeText(text.value, textConfig.x, textConfig.y);
     }
 
     const measure = context.measureText(text.value);
@@ -98,15 +98,15 @@ function drawText(context) {
     else {
         const gradient = context.createLinearGradient(
             0,
-            textPosition.y - measure.actualBoundingBoxAscent + 1,
+            textConfig.y - measure.actualBoundingBoxAscent + 1,
             0,
-            textPosition.y + measure.actualBoundingBoxDescent - 1
+            textConfig.y + measure.actualBoundingBoxDescent - 1
         );
         gradient.addColorStop(0, '#fff');
         gradient.addColorStop(1, '#888');
         context.fillStyle = gradient;
     }
-    context.fillText(text.value, textPosition.x, textPosition.y);
+    context.fillText(text.value, textConfig.x, textConfig.y);
 }
 
 function drawShine(context, canvas) {

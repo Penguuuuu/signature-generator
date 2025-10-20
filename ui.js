@@ -270,8 +270,8 @@ export function createTextSection() {
     containerDirectionalButtons.append(row1, row2, row3);
 
     const containerCoordinates = createContainer({id: 'containerCoordinates', flexDirection: 'column'});
-    const x = createInputText({id: 'x', defaultValue: 175, width: '50px', flexDirection: 'row', label: 'X:'});
-    const y = createInputText({id: 'y', defaultValue: 10, width: '50px', flexDirection: 'row', label: 'Y:'});
+    const x = createInputText({id: 'x', width: '50px', flexDirection: 'row', label: 'X:'});
+    const y = createInputText({id: 'y', width: '50px', flexDirection: 'row', label: 'Y:'});
     containerCoordinates.append(x, y);
 
     const container = createContainer({id: 'container', flexDirection: 'row'});
