@@ -10,8 +10,9 @@ new FontFace('visitor', 'url(visitor.ttf)')
             document.fonts.add(font);
 
             const inputText = createInputText({
-                label: 'Text Box',
+                labelText: 'Text:',
                 id: 'textBox',
+                inputText: 'Touhou Enjoyer',
                 placeholder: 'Type here...'
             });
             inputText.addEventListener('input', () => updateCanvas());

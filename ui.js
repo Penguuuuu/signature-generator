@@ -219,9 +219,9 @@ export function createInputText(...inputs) {
         gap: '5px'
     });
 
-    inputs.forEach(({ id, text = '', placeholder = '' }) => {
+    inputs.forEach(({ id, labelText = '', placeholder = '', inputText = '' }) => {
         const label = document.createElement('label');
-        label.textContent = text;
+        label.textContent = labelText;
         label.htmlFor = id;
         Object.assign(label.style, {
             display: 'flex',
@@ -232,6 +232,7 @@ export function createInputText(...inputs) {
         input.type = 'text';
         input.id = id;
         input.placeholder = placeholder;
+        input.value = inputText;
         Object.assign(input.style, {
             height: '24px',
             padding: '4px',
@@ -365,9 +366,9 @@ export function createStripesSection() {
     });
 
     const containerInput = createInputText(
-        { text: 'Thickness:', id: 'stripesThickness' },
-        { text: 'Gap:', id: 'stripesGap' },
-        { text: 'Color:', id: 'stripesColor' }
+        { labelText: 'Thickness:', id: 'stripesThickness' },
+        { labelText: 'Gap:', id: 'stripesGap' },
+        { labelText: 'Color:', id: 'stripesColor' }
     );
 
     container.append(header, checkboxStripes, containerInput)
