@@ -100,7 +100,7 @@ export function createDropdown({label, options, id, defaultValue}) {
     return container;
 }
 
-export function createButton({label = '', id, text = '', width = 'max-content', height = 'max-content'}) {
+export function createButton({label = '', id, text = '', width = 'max-content', height = '28px'}) {
     const button = document.createElement('button');
     button.id = id;
     button.textContent = text;

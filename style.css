@@ -27,3 +27,11 @@ body {
     gap: 5px;
     /* border: 1px solid #444; */
 }
+
+#main {
+    width: 1000px;
+    margin: 0 auto;
+    border-inline: 1px solid #444;
+    display: flex;
+    align-items: center;
+}
