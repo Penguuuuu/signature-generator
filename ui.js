@@ -3,9 +3,23 @@ import { helpers } from './helpers.js';
 
 export function createDropdown({label, options, id, defaultValue}) {
     function dropdownColor() {
-        if (containerOptions.style.display === 'block') dropdown.style.background = '#222';
-        else dropdown.style.background = '#111';
+        if (containerOptions.style.display === 'block') {
+            dropdown.style.background = '#222';
+            arrow.style.transform = 'rotate(180deg)';
+        }
+        else {
+            dropdown.style.background = '#111';
+            arrow.style.transform = 'rotate(0deg)';
+        }
     }
+
+    const arrow = document.createElement('img');
+    arrow.src = 'arrow.svg';
+    Object.assign(arrow.style, {
+        width: '18px',
+        height: '18px',
+        pointerEvents: 'none',
+    });
 
     const container = document.createElement('div');
     Object.assign(container.style, {
@@ -22,13 +36,16 @@ export function createDropdown({label, options, id, defaultValue}) {
     const dropdown = document.createElement('div');
     dropdown.id = id;
     Object.assign(dropdown.style, {
+        display: 'flex',
+        alignItems: 'center',
         position: 'relative',
         width: '200px',
         padding: '4px',
         border: '1px solid #444',
         background: '#111',
         cursor: 'pointer',
-        userSelect: 'none'
+        userSelect: 'none',
+        justifyContent: 'space-between'
     });
     dropdown.addEventListener('mouseenter', () => dropdown.style.background = '#222');
     dropdown.addEventListener('mouseleave', () => dropdownColor());
@@ -78,7 +95,7 @@ export function createDropdown({label, options, id, defaultValue}) {
         dropdownColor();
     });
 
-    dropdown.append(selected, containerOptions);
+    dropdown.append(selected, arrow, containerOptions);
     container.append(elementLabel, dropdown);
     return container;
 }
@@ -159,10 +176,11 @@ export function createCheckbox({label, id, defaultValue}) {
     const tick = document.createElement('img');
     tick.src = 'tick.svg';
     Object.assign(tick.style, {
-        width: '22px',
-        height: '22px',
+        width: '18px',
+        height: '18px',
         position: 'absolute',
         pointerEvents: 'none',
+        transform: 'translate(2px, 0)',
         display: checkbox.checked ? 'block' : 'none'
     });
 
@@ -253,10 +271,10 @@ export function createImageSection() {
 export function createTextSection() {
     function addIcon (button, rotation) {
         const img = document.createElement('img');
-        img.src = './arrow.svg';
+        img.src = 'arrow.svg';
         Object.assign(img.style, {
-            width: '22px',
-            height: '22px',
+            width: '18px',
+            height: '18px',
             transform: `rotate(${rotation}deg)`,
             pointerEvents: 'none'
         });
