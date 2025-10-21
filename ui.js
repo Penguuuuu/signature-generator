@@ -251,6 +251,21 @@ export function createImageSection() {
 }
 
 export function createTextSection() {
+    function addIcon (button, rotation) {
+        const img = document.createElement('img');
+        img.src = './arrow.svg';
+        img.alt = button.id;
+        img.width = 22;
+        img.height = 22;
+        img.style.transform = `rotate(${rotation}deg)`;
+
+        button.style.display = 'flex';
+        button.style.alignItems = 'center';
+        button.style.justifyContent = 'center';
+
+        button.appendChild(img);
+    };
+
     const containerCenterButtons = createContainer({id: 'containerCenterButtons', flexDirection: 'column'});
     const buttonHorizontal = createButton({id: 'buttonHorizontal', text: 'Center Horizontal'});
     const buttonVertical = createButton({id: 'buttonVertical', text: 'Center Vertical'});
@@ -258,9 +273,13 @@ export function createTextSection() {
 
     const containerDirectionalButtons = createContainer({id: 'containerDirectionalButtons', flexDirection: 'column'});
     const up = createButton({id: 'up', width: '22px', height: '22px'});
+    addIcon(up, 180);
     const left = createButton({id: 'left', width: '22px', height: '22px'});
+    addIcon(left, 90);
     const right = createButton({id: 'right', width: '22px', height: '22px'});
+    addIcon(right, 270);
     const down = createButton({id: 'down', width: '22px', height: '22px'});
+    addIcon(down, 0);
     const row1 = createContainer({flexDirection: 'row'});
     row1.appendChild(up);
     const row2 = createContainer({flexDirection: 'row', gap: '22px'});
