@@ -254,14 +254,17 @@ export function createTextSection() {
     function addIcon (button, rotation) {
         const img = document.createElement('img');
         img.src = './arrow.svg';
-        img.alt = button.id;
-        img.width = 22;
-        img.height = 22;
-        img.style.transform = `rotate(${rotation}deg)`;
+        Object.assign(img.style, {
+            widt: '22px',
+            height: '22px',
+            transform: `rotate(${rotation}deg)`
+        });
 
-        button.style.display = 'flex';
-        button.style.alignItems = 'center';
-        button.style.justifyContent = 'center';
+        Object.assign(button.style, {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+        });
 
         button.appendChild(img);
     };
