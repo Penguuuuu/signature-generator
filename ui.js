@@ -1,6 +1,23 @@
 import { updateCanvas } from './canvas.js';
 import { helpers } from './helpers.js';
 
+export function createHeader({id, title}) {
+    const container = createContainer({id: id, flexDirection: 'column'})
+
+    const titleElement = document.createElement('div');
+    titleElement.textContent = title;
+    Object.assign(titleElement.style, {
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        fontWeight: 'bold',
+        borderBottom: '1px solid #444'
+    });
+
+    container.append(titleElement);
+    return container
+}
+
 export function createDropdown({label, options, id, defaultValue}) {
     function dropdownColor() {
         if (containerOptions.style.display === 'block') {
@@ -40,6 +57,7 @@ export function createDropdown({label, options, id, defaultValue}) {
         alignItems: 'center',
         position: 'relative',
         width: '200px',
+        height: '24px',
         padding: '4px',
         border: '1px solid #444',
         background: '#111',
@@ -78,7 +96,8 @@ export function createDropdown({label, options, id, defaultValue}) {
         item.textContent = helpers.uppercase(opt);
         Object.assign(item.style, {
             padding: '4px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            height: '24px'
         });
         item.addEventListener('mouseenter', () => item.style.background = '#333');
         item.addEventListener('mouseleave', () => item.style.background = '');
@@ -100,7 +119,7 @@ export function createDropdown({label, options, id, defaultValue}) {
     return container;
 }
 
-export function createButton({label = '', id, text = '', width = 'max-content', height = '28px'}) {
+export function createButton({label = '', id, text = '', width = 'max-content', height = '24px'}) {
     const button = document.createElement('button');
     button.id = id;
     button.textContent = text;
@@ -158,8 +177,8 @@ export function createCheckbox({label, id, defaultValue}) {
     checkbox.checked = defaultValue;
     Object.assign(checkbox.style, {
         appearance: 'none',
-        width: '22px',
-        height: '22px',
+        width: '18px',
+        height: '18px',
         border: '1px solid #444',
         background: checkbox.checked ? '#333' : '#111',
         cursor: 'pointer',
@@ -176,11 +195,11 @@ export function createCheckbox({label, id, defaultValue}) {
     const tick = document.createElement('img');
     tick.src = 'tick.svg';
     Object.assign(tick.style, {
-        width: '18px',
-        height: '18px',
+        width: '16px',
+        height: '16px',
         position: 'absolute',
         pointerEvents: 'none',
-        transform: 'translate(2px, 0)',
+        transform: 'translate(1px, 0)',
         display: checkbox.checked ? 'block' : 'none'
     });
 
@@ -192,47 +211,48 @@ export function createCheckbox({label, id, defaultValue}) {
     return container;
 }
 
-export function createInputText({label = '', flexDirection = 'column', id, defaultValue = '', width, placeholder = ''}) {
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.id = id;
-    input.placeholder = placeholder;
-    input.value = defaultValue;
-    Object.assign(input.style, {
-        width: width,
-        padding: '4px',
-        border: '1px solid #444',
-        color: '#fff',
-        background: '#111',
-        outline: 'none',
-        cursor: 'text',
-        userSelect: 'text',
-        font: 'inherit'
+export function createInputText(...inputs) {
+    const container = document.createElement('div');
+    Object.assign(container.style, {
+        display: 'grid',
+        gridTemplateColumns: 'max-content 1fr',
+        gap: '5px'
     });
-    input.addEventListener('mouseenter', () => input.style.background = '#222');
-    input.addEventListener('mouseleave', () => input.style.background = '#111');
 
-    if (label) {
-        const container = document.createElement('div');
-        Object.assign(container.style, {
+    inputs.forEach(({ id, text = '', placeholder = '' }) => {
+        const label = document.createElement('label');
+        label.textContent = text;
+        label.htmlFor = id;
+        Object.assign(label.style, {
             display: 'flex',
-            flexDirection: flexDirection,
-            alignItems: 'center',
-            gap: '2px'
+            alignItems: 'center'
         });
 
-        const labelElement = document.createElement('label');
-        labelElement.htmlFor = id;
-        labelElement.textContent = label;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = id;
+        input.placeholder = placeholder;
+        Object.assign(input.style, {
+            height: '24px',
+            padding: '4px',
+            border: '1px solid #444',
+            color: '#fff',
+            background: '#111',
+            outline: 'none',
+            cursor: 'text',
+            userSelect: 'text',
+            font: 'inherit'
+        });
+        input.addEventListener('mouseenter', () => input.style.background = '#222');
+        input.addEventListener('mouseleave', () => input.style.background = '#111');
 
-        container.append(labelElement, input);
-        return container;
-    }
+        container.append(label, input);
+    });
 
-    return input;
+    return container;
 }
 
-export function createContainer({id, flexDirection, gap = '', alignItems = 'center'}) {
+export function createContainer({id = '', flexDirection, gap = '', alignItems = 'center'}) {
     const container = document.createElement('div');
     container.id = id;
     Object.assign(container.style, {
@@ -243,6 +263,18 @@ export function createContainer({id, flexDirection, gap = '', alignItems = 'cent
     });
 
     return container;
+}
+
+export function createLabel(label) {
+    const labelElement = document.createElement('div');
+    labelElement.textContent = label;
+    Object.assign(labelElement.style, {
+        height: '24px',
+        display: 'flex',
+        alignItems: 'center'
+    });
+
+    return labelElement
 }
 
 export function createImageSection() {
@@ -294,17 +326,17 @@ export function createTextSection() {
     containerCenterButtons.append(buttonHorizontal, buttonVertical);
 
     const containerDirectionalButtons = createContainer({id: 'containerDirectionalButtons', flexDirection: 'column'});
-    const up = createButton({id: 'up', width: '22px', height: '22px'});
+    const up = createButton({id: 'up', width: '24px'});
     addIcon(up, 180);
-    const left = createButton({id: 'left', width: '22px', height: '22px'});
+    const left = createButton({id: 'left', width: '24px'});
     addIcon(left, 90);
-    const right = createButton({id: 'right', width: '22px', height: '22px'});
+    const right = createButton({id: 'right', width: '24px'});
     addIcon(right, 270);
-    const down = createButton({id: 'down', width: '22px', height: '22px'});
+    const down = createButton({id: 'down', width: '24px'});
     addIcon(down, 0);
     const row1 = createContainer({flexDirection: 'row'});
     row1.appendChild(up);
-    const row2 = createContainer({flexDirection: 'row', gap: '22px'});
+    const row2 = createContainer({flexDirection: 'row', gap: '24px'});
     row2.append(left, right);
     const row3 = createContainer({flexDirection: 'row'});
     row3.appendChild(down);
@@ -322,11 +354,23 @@ export function createTextSection() {
 }
 
 export function createStripesSection() {
-    const container = createContainer({id: 'containerStripes', flexDirection: 'column', alignItems: 'left'});
-    const thickness = createInputText({id: 'stripesThickness', width: '50px', flexDirection: 'row', label: 'Stripes Thickness:'});
-    const gap = createInputText({id: 'stripesGap', width: '50px', flexDirection: 'row', label: 'Stripes Gap:'});
-    const color = createInputText({id: 'stripesColor', width: 'max-content', flexDirection: 'row', label: 'Stripes Color:'});
+    const container = createContainer({flexDirection: 'column', alignItems: 'left'})
+    container.style.gap = '5px'
+    const header = createHeader({id: 'stripes', title: 'Stripes'});
 
-    container.append(thickness, gap, color);
+    const checkboxStripes = createCheckbox({
+        label: 'Stripes',
+        id: 'checkboxStripes',
+        defaultValue: true
+    });
+
+    const containerInput = createInputText(
+        { text: 'Thickness:', id: 'stripesThickness' },
+        { text: 'Gap:', id: 'stripesGap' },
+        { text: 'Color:', id: 'stripesColor' }
+    );
+
+    container.append(header, checkboxStripes, containerInput)
     return container;
 }
+

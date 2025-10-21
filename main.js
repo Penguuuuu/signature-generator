@@ -12,8 +12,6 @@ new FontFace('visitor', 'url(visitor.ttf)')
             const inputText = createInputText({
                 label: 'Text Box',
                 id: 'textBox',
-                defaultValue: 'Touhou Enjoyer',
-                width: '200px',
                 placeholder: 'Type here...'
             });
             inputText.addEventListener('input', () => updateCanvas());
@@ -44,12 +42,6 @@ new FontFace('visitor', 'url(visitor.ttf)')
                 defaultValue: true
             });
 
-            const checkboxStripes = createCheckbox({
-                label: 'Stripes',
-                id: 'checkboxStripes',
-                defaultValue: true
-            });
-
             const checkboxShine = createCheckbox({
                 label: 'Shine',
                 id: 'checkboxShine',
@@ -62,8 +54,9 @@ new FontFace('visitor', 'url(visitor.ttf)')
 
             const stripesSection = createStripesSection();
 
-            document.getElementById('tools').append(
-                stripesSection,
+            const tools = document.getElementById('tools')
+            tools.style.width = '300px'
+            tools.append(
                 textSection,
                 imageSection,
                 inputText,
@@ -71,10 +64,10 @@ new FontFace('visitor', 'url(visitor.ttf)')
                 dropdownBackground,
                 checkboxBorder,
                 checkboxOutlineText,
-                checkboxStripes,
                 checkboxShine,
-
             );
+
+            document.getElementById('stripesSection').append(stripesSection);
 
             updateCanvas();
 
