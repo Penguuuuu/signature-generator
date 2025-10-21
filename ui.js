@@ -257,7 +257,8 @@ export function createTextSection() {
         Object.assign(img.style, {
             width: '22px',
             height: '22px',
-            transform: `rotate(${rotation}deg)`
+            transform: `rotate(${rotation}deg)`,
+            pointerEvents: 'none'
         });
 
         Object.assign(button.style, {
