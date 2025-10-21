@@ -255,7 +255,7 @@ export function createTextSection() {
         const img = document.createElement('img');
         img.src = './arrow.svg';
         Object.assign(img.style, {
-            widt: '22px',
+            width: '22px',
             height: '22px',
             transform: `rotate(${rotation}deg)`
         });
