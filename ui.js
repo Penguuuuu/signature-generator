@@ -42,7 +42,6 @@ export function createDropdown({label, options, id, defaultValue}) {
     Object.assign(container.style, {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
         gap: '2px'
     });
 
@@ -56,7 +55,7 @@ export function createDropdown({label, options, id, defaultValue}) {
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
-        width: '200px',
+        width: '100%',
         height: '24px',
         padding: '4px',
         border: '1px solid #444',
@@ -215,7 +214,7 @@ export function createInputText(...inputs) {
     const container = document.createElement('div');
     Object.assign(container.style, {
         display: 'grid',
-        gridTemplateColumns: 'max-content 1fr',
+        gridTemplateColumns: 'max-content auto',
         gap: '5px'
     });
 
@@ -242,7 +241,8 @@ export function createInputText(...inputs) {
             outline: 'none',
             cursor: 'text',
             userSelect: 'text',
-            font: 'inherit'
+            font: 'inherit',
+            width: '100%',
         });
         input.addEventListener('mouseenter', () => input.style.background = '#222');
         input.addEventListener('mouseleave', () => input.style.background = '#111');
@@ -264,18 +264,6 @@ export function createContainer({id = '', flexDirection, gap = '', alignItems = 
     });
 
     return container;
-}
-
-export function createLabel(label) {
-    const labelElement = document.createElement('div');
-    labelElement.textContent = label;
-    Object.assign(labelElement.style, {
-        height: '24px',
-        display: 'flex',
-        alignItems: 'center'
-    });
-
-    return labelElement
 }
 
 export function createImageSection() {
@@ -301,65 +289,65 @@ export function createImageSection() {
     return container;
 }
 
-export function createTextSection() {
-    function addIcon (button, rotation) {
-        const img = document.createElement('img');
-        img.src = 'arrow.svg';
-        Object.assign(img.style, {
-            width: '18px',
-            height: '18px',
-            transform: `rotate(${rotation}deg)`,
+export function createMovementButtons(id) {
+    const container = document.createElement('div');
+    Object.assign(container.style, {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    });
+
+    function addIcon ({button, rotation}) {
+        const image = document.createElement('img');
+        image.src = 'arrow.svg';
+        Object.assign(image.style, {
+            width: '22px',
+            height: '22px',
+            transform: `translate(-2px, -1px) rotate(${rotation}deg)`,
             pointerEvents: 'none'
         });
 
-        Object.assign(button.style, {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-        });
-
-        button.appendChild(img);
+        button.appendChild(image);
     };
 
-    const containerCenterButtons = createContainer({id: 'containerCenterButtons', flexDirection: 'column'});
-    const buttonHorizontal = createButton({id: 'buttonHorizontal', text: 'Center Horizontal'});
-    const buttonVertical = createButton({id: 'buttonVertical', text: 'Center Vertical'});
-    containerCenterButtons.append(buttonHorizontal, buttonVertical);
+    const containerDirectionalButtons = createContainer({flexDirection: 'column', gap: '5px'});
+    const diagonalUpLeft = createButton({id: `${id}UpLeft`, width: '24px'});
+    const up = createButton({id: `${id}Up`, width: '24px'});
+    const diagonalUpRight = createButton({id: `${id}UpRight`, width: '24px'});
 
-    const containerDirectionalButtons = createContainer({id: 'containerDirectionalButtons', flexDirection: 'column'});
-    const up = createButton({id: 'up', width: '24px'});
-    addIcon(up, 180);
-    const left = createButton({id: 'left', width: '24px'});
-    addIcon(left, 90);
-    const right = createButton({id: 'right', width: '24px'});
-    addIcon(right, 270);
-    const down = createButton({id: 'down', width: '24px'});
-    addIcon(down, 0);
-    const row1 = createContainer({flexDirection: 'row'});
-    row1.appendChild(up);
-    const row2 = createContainer({flexDirection: 'row', gap: '24px'});
+    const left = createButton({id: `${id}Left`, width: '24px'});
+    const right = createButton({id: `${id}Right`, width: '24px'});
+
+    const diagonalDownLeft = createButton({id: `${id}DownLeft`, width: '24px'});
+    const down = createButton({id: `${id}Down`, width: '24px'});
+    const diagonalDownRight = createButton({id: `${id}DownRight`, width: '24px'});
+
+    addIcon({ button: diagonalUpLeft, rotation: 135 });
+    addIcon({ button: up, rotation: 180 });
+    addIcon({ button: diagonalUpRight, rotation: -135 });
+    addIcon({ button: left, rotation: 90 });
+    addIcon({ button: right, rotation: -90 });
+    addIcon({ button: diagonalDownLeft, rotation: 45 });
+    addIcon({ button: down, rotation: 0 });
+    addIcon({ button: diagonalDownRight, rotation: -45 });
+
+    const row1 = createContainer({flexDirection: 'row', gap: '5px'});
+    const row2 = createContainer({flexDirection: 'row', gap: '34px'});
+    const row3 = createContainer({flexDirection: 'row', gap: '5px'});
+
+    row1.append(diagonalUpLeft, up, diagonalUpRight);
     row2.append(left, right);
-    const row3 = createContainer({flexDirection: 'row'});
-    row3.appendChild(down);
+    row3.append(diagonalDownLeft, down, diagonalDownRight);
     containerDirectionalButtons.append(row1, row2, row3);
-
-    const containerCoordinates = createContainer({id: 'containerCoordinates', flexDirection: 'column'});
-    const x = createInputText({id: 'x', width: '50px', flexDirection: 'row', label: 'X:'});
-    const y = createInputText({id: 'y', width: '50px', flexDirection: 'row', label: 'Y:'});
-    containerCoordinates.append(x, y);
-
-    const container = createContainer({id: 'container', flexDirection: 'row'});
-    container.append(containerDirectionalButtons, containerCoordinates, containerCenterButtons);
-
+    container.append(containerDirectionalButtons);
     return container;
 }
 
 export function createStripesSection() {
-    const container = createContainer({flexDirection: 'column', alignItems: 'left'})
-    container.style.gap = '5px'
+    const container = createContainer({flexDirection: 'column', alignItems: 'left', gap: '5px'});
     const header = createHeader({id: 'stripes', title: 'Stripes'});
 
-    const checkboxStripes = createCheckbox({
+    const checkbox = createCheckbox({
         label: 'Stripes',
         id: 'checkboxStripes',
         defaultValue: true
@@ -368,10 +356,45 @@ export function createStripesSection() {
     const containerInput = createInputText(
         { labelText: 'Thickness:', id: 'stripesThickness' },
         { labelText: 'Gap:', id: 'stripesGap' },
-        { labelText: 'Color:', id: 'stripesColor' }
+        { labelText: 'Color:', id: 'stripesColor' },
+        { labelText: 'Angle:', id: 'stripesAngle' }
     );
 
-    container.append(header, checkboxStripes, containerInput)
+    container.append(header, checkbox, containerInput);
     return container;
 }
 
+export function createTextSection() {
+    const container = createContainer({flexDirection: 'column', alignItems: 'left', gap: '5px'});
+    const header = createHeader({id: 'TextSection', title: 'Text'});
+
+    const checkbox = createCheckbox({
+        label: 'Outline',
+        id: 'checkboxOutlineText',
+        defaultValue: true
+    });
+
+    const containerInputAdjust = createInputText(
+        { labelText: 'X:', id: 'x' },
+        { labelText: 'Y:', id: 'y' }
+    );
+
+    const containerInput = createInputText(
+        { labelText: 'Text:', id: 'textBox', inputText: 'Touhou Enjoyer', placeholder: 'Type here...' }
+    );
+
+    const dropdown = createDropdown({
+        label: 'Text Type',
+        options: ['solid', 'gradient'],
+        id: 'typeText',
+        defaultValue: 'gradient'
+    });
+
+    const buttonsDirectional = createMovementButtons('text');
+
+    const containerAdjust = createContainer({flexDirection: 'row', alignItems: 'end', gap: '5px'});
+    containerAdjust.append(buttonsDirectional, containerInputAdjust)
+
+    container.append(header, checkbox, containerInput, containerAdjust, dropdown)
+    return container;
+}

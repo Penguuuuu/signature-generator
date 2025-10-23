@@ -1,4 +1,4 @@
-import { createDropdown, createCheckbox, createInputText, createImageSection, createTextSection, createStripesSection } from './ui.js';
+import { createDropdown, createCheckbox, createImageSection, createTextSection, createStripesSection } from './ui.js';
 import { updateCanvas } from './canvas.js';
 
 export let textConfig = { x: 175, y: 10 };
@@ -8,21 +8,6 @@ new FontFace('visitor', 'url(visitor.ttf)')
         .load()
         .then(font => {
             document.fonts.add(font);
-
-            const inputText = createInputText({
-                labelText: 'Text:',
-                id: 'textBox',
-                inputText: 'Touhou Enjoyer',
-                placeholder: 'Type here...'
-            });
-            inputText.addEventListener('input', () => updateCanvas());
-
-            const dropdownText = createDropdown({
-                label: 'Text Type',
-                options: ['solid', 'gradient'],
-                id: 'typeText',
-                defaultValue: 'gradient'
-            });
 
             const dropdownBackground = createDropdown({
                 label: 'Background Type',
@@ -34,12 +19,6 @@ new FontFace('visitor', 'url(visitor.ttf)')
             const checkboxBorder = createCheckbox({
                 label: 'Border',
                 id: 'checkboxBorder',
-                defaultValue: true
-            });
-
-            const checkboxOutlineText = createCheckbox({
-                label: 'Outline Text',
-                id: 'checkboxOutlineText',
                 defaultValue: true
             });
 
@@ -56,19 +35,17 @@ new FontFace('visitor', 'url(visitor.ttf)')
             const stripesSection = createStripesSection();
 
             const tools = document.getElementById('tools')
-            tools.style.width = '300px'
+            tools.style.width = '270px'
             tools.append(
-                textSection,
                 imageSection,
-                inputText,
-                dropdownText,
                 dropdownBackground,
                 checkboxBorder,
-                checkboxOutlineText,
-                checkboxShine,
+                checkboxShine
             );
 
             document.getElementById('stripesSection').append(stripesSection);
+
+            document.getElementById('textSection').append(textSection);
 
             updateCanvas();
 
@@ -80,10 +57,14 @@ new FontFace('visitor', 'url(visitor.ttf)')
 
 function setTextSection() {
     const buttons = {
-        up: document.getElementById('up'),
-        down: document.getElementById('down'),
-        left: document.getElementById('left'),
-        right: document.getElementById('right'),
+        upLeft: document.getElementById('textUpLeft'),
+        up: document.getElementById('textUp'),
+        upRight: document.getElementById('textUpRight'),
+        left: document.getElementById('textLeft'),
+        right: document.getElementById('textRight'),
+        downLeft: document.getElementById('textDownLeft'),
+        down: document.getElementById('textDown'),
+        downRight: document.getElementById('textDownRight'),
     };
 
     const fields = {
@@ -91,10 +72,10 @@ function setTextSection() {
         y: document.getElementById('y'),
     }
 
-    const initial = {
-        x: textConfig.x,
-        y: textConfig.y,
-    };
+    // const initial = {
+    //     x: textConfig.x,
+    //     y: textConfig.y,
+    // };
 
     function updateFields() {
         fields.x.value = textConfig.x;
@@ -133,22 +114,14 @@ function setTextSection() {
         });
     });
 
-    document.getElementById('buttonHorizontal').addEventListener('click', () => {
-        textConfig.x = initial.x;
-        updateFields();
-        updateCanvas();
-    });
-
-    document.getElementById('buttonVertical').addEventListener('click', () => {
-        textConfig.y = initial.y;
-        updateFields();
-        updateCanvas();
-    });
-
+    holdButton(buttons.upLeft, () => { textConfig.x -= 1; textConfig.y -= 1; updateFields(); updateCanvas(); });
     holdButton(buttons.up, () => { textConfig.y -= 1; updateFields(); updateCanvas(); });
-    holdButton(buttons.down, () => { textConfig.y += 1; updateFields(); updateCanvas(); });
+    holdButton(buttons.upRight, () => { textConfig.x += 1; textConfig.y -= 1; updateFields(); updateCanvas(); });
     holdButton(buttons.left, () => { textConfig.x -= 1; updateFields(); updateCanvas(); });
     holdButton(buttons.right, () => { textConfig.x += 1; updateFields(); updateCanvas(); });
+    holdButton(buttons.downLeft, () => { textConfig.x -= 1; textConfig.y += 1; updateFields(); updateCanvas(); });
+    holdButton(buttons.down, () => { textConfig.y += 1; updateFields(); updateCanvas(); });
+    holdButton(buttons.downRight, () => { textConfig.x += 1; textConfig.y += 1; updateFields(); updateCanvas(); });
 
     updateFields();
 }
