@@ -123,6 +123,9 @@ function setTextSection() {
     holdButton(buttons.down, () => { textConfig.y += 1; updateFields(); updateCanvas(); });
     holdButton(buttons.downRight, () => { textConfig.x += 1; textConfig.y += 1; updateFields(); updateCanvas(); });
 
+    textBox = document.getElementById('textBox'),
+    textBox.addEventListener('input', function(event) { updateCanvas(); });
+
     updateFields();
 }
 
