@@ -31,21 +31,17 @@ new FontFace('visitor', 'url(visitor.ttf)')
             const imageSection = createImageSection();
 
             const textSection = createTextSection();
+            document.getElementById('textSection').append(textSection);
 
             const stripesSection = createStripesSection();
+            document.getElementById('stripesSection').append(stripesSection);
 
-            const tools = document.getElementById('tools')
-            tools.style.width = '270px'
-            tools.append(
+            document.getElementById('tools').append(
                 imageSection,
                 dropdownBackground,
                 checkboxBorder,
                 checkboxShine
             );
-
-            document.getElementById('stripesSection').append(stripesSection);
-
-            document.getElementById('textSection').append(textSection);
 
             updateCanvas();
 
