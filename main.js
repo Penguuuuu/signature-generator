@@ -160,8 +160,7 @@ function setStripesSection() {
     updateFields();
 
 }
-
-async function getData() {
+(async () => {
     try {
         const response = await fetch('https://api.titanic.sh/users/1885');
         const data = await response.json();
@@ -170,4 +169,4 @@ async function getData() {
     catch (e) {
         return console.log(e)
     }
-}
+})();
