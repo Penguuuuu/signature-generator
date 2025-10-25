@@ -158,15 +158,5 @@ function setStripesSection() {
     });
 
     updateFields();
-
 }
-(async () => {
-    try {
-        const response = await fetch('https://api.titanic.sh/users/1885');
-        const data = await response.json();
-        console.log(data)
-    }
-    catch (e) {
-        return console.log(e)
-    }
-})();
+(
